@@ -25,41 +25,32 @@
 ** SPOT-ON, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _spoton_encryptfile_h_
-#define _spoton_encryptfile_h_
+#ifndef _spoton_randomness_download_h_
+#define _spoton_randomness_download_h_
 
-#include <QMainWindow>
+#include <QHostAddress>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QTimer>
 
-#include "ui_spot-on-encryptfile.h"
-
-class QKeyEvent;
-
-class spoton_encryptfile: public QMainWindow
+class spoton_randomness_download: public QNetworkAccessManager
 {
   Q_OBJECT
 
  public:
-  spoton_encryptfile(void);
-  ~spoton_encryptfile();
-  bool occupied(void) const;
-  void abort(void);
-  void show(QWidget *parent);
+  spoton_randomness_download(QObject *parent);
+  spoton_randomness_download(void);
+  void setHost(const QString &text);
 
  private:
-  Ui_spoton_encryptfile ui;
-#ifdef Q_OS_MAC
-#if QT_VERSION >= 0x050000 && QT_VERSION < 0x050300
-  bool event(QEvent *event);
-#endif
-#endif
-  void keyPressEvent(QKeyEvent *event);
+  QHostAddress m_address;
+  QTimer m_timer;
 
  private slots:
-  void slotClose(void);
-  void slotCloseTab(int index);
-  void slotNewPage(void);
-  void slotSetIcons(void);
-  void slotStatus(const QString &status);
+  void slotError(QNetworkReply::NetworkError error);
+  void slotFinished(void);
+  void slotSslErrors(const QList<QSslError> &errors);
+  void slotTimeout(void);
 };
 
 #endif

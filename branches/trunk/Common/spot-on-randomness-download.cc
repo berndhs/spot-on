@@ -25,27 +25,79 @@
 ** SPOT-ON, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "spot-on-external-address.h"
+#include "spot-on-randomness-download.h"
 
 #include <QNetworkRequest>
 
-spoton_external_address::spoton_external_address(QObject *parent):
+spoton_randomness_download::spoton_randomness_download(QObject *parent):
   QNetworkAccessManager(parent)
 {
   m_address = QHostAddress();
+  connect(&m_timer,
+	  SIGNAL(timeout(void)),
+	  this,
+	  SLOT(slotTimeout(void)));
 }
 
-spoton_external_address::spoton_external_address(void):
+spoton_randomness_download::spoton_randomness_download(void):
   QNetworkAccessManager(0)
 {
   m_address = QHostAddress();
+  connect(&m_timer,
+	  SIGNAL(timeout(void)),
+	  this,
+	  SLOT(slotTimeout(void)));
 }
 
-void spoton_external_address::discover(void)
+void spoton_randomness_download::setHost(const QString &text)
 {
-  QNetworkReply *reply = 0;
+  m_address = QHostAddress(text.trimmed());
 
-  reply = get(QNetworkRequest(QUrl::fromUserInput("https://api.ipify.org")));
+  if(!m_address.isNull())
+    m_timer.start(2500);
+  else
+    m_timer.stop();
+}
+
+void spoton_randomness_download::slotError(QNetworkReply::NetworkError error)
+{
+  Q_UNUSED(error);
+
+  QNetworkReply *reply = qobject_cast<QNetworkReply *> (sender());
+
+  if(reply)
+    reply->deleteLater();
+}
+
+void spoton_randomness_download::slotFinished(void)
+{
+  QNetworkReply *reply = qobject_cast<QNetworkReply *> (sender());
+
+  if(reply)
+    reply->deleteLater();
+}
+
+void spoton_randomness_download::slotSslErrors(const QList<QSslError> &errors)
+{
+  Q_UNUSED(errors);
+
+  QNetworkReply *reply = qobject_cast<QNetworkReply *> (sender());
+
+  if(reply)
+    reply->ignoreSslErrors();
+}
+
+void spoton_randomness_download::slotTimeout(void)
+{
+  if(m_address.isNull())
+    return;
+
+  QNetworkReply *reply = findChildren<QNetworkReply *> ();
+
+  if(reply)
+    return;
+
+  reply = get(QNetworkRequest(QUrl::fromUserInput(m_address.toString())));
   connect(reply,
 	  SIGNAL(error(QNetworkReply::NetworkError)),
 	  this,
@@ -58,60 +110,4 @@ void spoton_external_address::discover(void)
 	  SIGNAL(sslErrors(const QList<QSslError> &)),
 	  this,
 	  SLOT(slotSslErrors(const QList<QSslError> &)));
-}
-
-void spoton_external_address::slotFinished(void)
-{
-  QNetworkReply *reply = qobject_cast<QNetworkReply *> (sender());
-
-  if(reply)
-    {
-      QByteArray bytes(reply->readAll());
-      int indexOf = bytes.indexOf("Current IP Address:");
-
-      if(indexOf > -1)
-	bytes.remove
-	  (0,
-	   bytes.indexOf("Current IP Address:") +
-	   static_cast<int> (qstrlen("Current IP Address:")));
-
-      indexOf = bytes.indexOf("<");
-
-      if(indexOf > -1)
-	bytes = bytes.mid(0, indexOf).trimmed();
-
-      m_address = QHostAddress(bytes.constData());
-      emit ipAddressDiscovered(m_address);
-      reply->deleteLater();
-    }
-}
-
-QHostAddress spoton_external_address::address(void) const
-{
-  return m_address;
-}
-
-void spoton_external_address::slotError(QNetworkReply::NetworkError error)
-{
-  Q_UNUSED(error);
-
-  QNetworkReply *reply = qobject_cast<QNetworkReply *> (sender());
-
-  if(reply)
-    reply->deleteLater();
-}
-
-void spoton_external_address::clear(void)
-{
-  m_address = QHostAddress();
-}
-
-void spoton_external_address::slotSslErrors(const QList<QSslError> &errors)
-{
-  Q_UNUSED(errors);
-
-  QNetworkReply *reply = qobject_cast<QNetworkReply *> (sender());
-
-  if(reply)
-    reply->ignoreSslErrors();
 }

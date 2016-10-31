@@ -598,7 +598,7 @@ spoton::spoton(void):QMainWindow()
      arg(__TIME__).
 #endif
      arg(sslSupported ?
-	 SSLeay_version(SSLEAY_VERSION) :
+	 OPENSSL_VERSION_TEXT :
 	 "OpenSSL is not supported, according to Qt").
      arg(QT_VERSION_STR).arg(CHAR_BIT * sizeof(void *)).
      arg(curl_version()).
@@ -2280,7 +2280,7 @@ spoton::spoton(void):QMainWindow()
 	  isExecutable())
     m_ui.kernelPath->setText(m_settings.value("gui/kernelPath").toString());
   else
-#ifdef QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000
     m_ui.kernelPath->setText
       ("/Applications/Spot-On_Qt5.d/Spot-On-Kernel.app");
 #else
