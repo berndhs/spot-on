@@ -1,0 +1,9 @@
+#!/bin/make
+
+LIBS=`find . -name '*.so' `
+
+all: spotstuff
+
+spotstuff:
+	echo "installing $(LIBS)"
+	install $(LIBS) /usr/local/lib64/
