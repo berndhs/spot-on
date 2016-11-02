@@ -1,9 +1,15 @@
 #!/bin/make
 
 LIBS=`find . -name '*.so' `
+VERSION=`grep VERSION branches/trunk/Common/spot-on-common.h \
+        | awk '{print $3}' | sed s/\"//g`
+
 
 all: spotstuff
 
 spotstuff:
 	echo "installing $(LIBS)"
 	install $(LIBS) /usr/local/lib64/
+
+tar:
+	makearchive.sh spot-on-$(VERSION) master
