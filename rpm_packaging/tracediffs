@@ -1,0 +1,1538 @@
+1c1
+< rpmbuild -ba spot-on.spec
+---
+> rpmbuild -ba deeptrim.spec
+1200c1200
+<   0: relcount	21
+---
+>   0: relcount	9
+1251c1251
+<   0: sourceversion	2016.11.05
+---
+>   0: sourceversion	0.1.1
+1340c1340,2862
+< error: line 46: Unknown tag: echo "tmp top is " /var/tmp
+---
+> ========================
+> -14: GNAT_arches	%{GPRbuild_arches} ia64 ppc alpha
+> -14: GNUconfigure(MCs:)	
+>   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS; 
+>   LDFLAGS="${LDFLAGS:-%{-s:-s}}"  ; export LDFLAGS; 
+>   %{-C:_mydir="`pwd`"; %{-M: %{__mkdir} -p %{-C*};} cd %{-C*}} 
+>   dirs="`find ${_mydir} -name configure.in -print`"; export dirs; 
+>     for coin in `echo ${dirs}` 
+> do 
+>   dr=`dirname ${coin}`; 
+> if test -f ${dr}/NO-AUTO-GEN; then 
+>  : 
+> else 
+>      macrodirs=`sed -n -e 's,AM_ACLOCAL_INCLUDE((.*)),1,gp' < ${coin}`; 
+>     ( cd ${dr}; 
+>       aclocalinclude="${ACLOCAL_FLAGS}"; 
+>       for k in ${macrodirs}; do 
+>         if test -d ${k}; then 
+>           aclocalinclude="${aclocalinclude} -I ${k}"; 
+>         ##else 
+>         ##  echo "**Warning**: No such directory `${k}'.  Ignored." 
+>         fi 
+>       done 
+>       if grep "^AM_GNU_GETTEXT" configure.in >/dev/null; then 
+>         if grep "sed.*POTFILES" configure.in >/dev/null; then 
+>           : do nothing -- we still have an old unmodified configure.in 
+>         else 
+>           test -r ${dr}/aclocal.m4 || touch ${dr}/aclocal.m4; 
+>           echo "no" | gettextize --force --copy; 
+>           test -r ${dr}/aclocal.m4 && %{__chmod} u+w ${dr}/aclocal.m4; 
+>         fi 
+>       fi 
+>       if grep "^AM_PROG_LIBTOOL" configure.in >/dev/null; then 
+>         %{__libtoolize} --force --copy; 
+>       fi 
+>       aclocal ${aclocalinclude}; 
+>       if grep "^AM_CONFIG_HEADER" configure.in >/dev/null; then 
+>         %{__autoheader}; 
+>       fi 
+>       echo "Running automake --gnu ${am_opt} ..."; 
+>       %{__automake} --add-missing --gnu ${am_opt}; 
+>       %{__autoconf}; 
+>     ); 
+>   fi 
+> done 
+>   %{-C:${_mydir}}%{!-C:.}/configure --prefix=%{_prefix} --exec-prefix=%{_exec_prefix} --bindir=%{_bindir} --sbindir=%{_sbindir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --includedir=%{_includedir} --libdir=%{_libdir} --libexecdir=%{_libexecdir} --localstatedir=%{_localstatedir} --sharedstatedir=%{_sharedstatedir} --mandir=%{_mandir} --infodir=%{_infodir} %* ; 
+>   %{-C:cd ${_mydir}; unset _mydir}
+> -14: GPRbuild_arches	%{ix86} x86_64 ppc64 ppc64p7 ppc64le s390x %{arm} aarch64
+>  -3: SOURCE0	/home/bernd/rpmbuild/SOURCES/deeptrim_0.1.1.tar.gz
+>  -3: SOURCE2	/home/bernd/rpmbuild/SOURCES/deeptrim.desktop
+>  -3: SOURCEURL0	deeptrim_0.1.1.tar.gz
+>  -3: SOURCEURL2	deeptrim.desktop
+> -14: __7zip	/usr/bin/7za
+> -14: ___build_args	-e
+> -14: ___build_cmd	%{?_sudo:%{_sudo} }%{?_remsh:%{_remsh} %{_remhost} }%{?_remsudo:%{_remsudo} }%{?_remchroot:%{_remchroot} %{_remroot} }%{___build_shell} %{___build_args}
+> -14: ___build_post	exit 0
+> -14: ___build_pre	
+>   RPM_SOURCE_DIR="%{u2p:%{_sourcedir}}"
+>   RPM_BUILD_DIR="%{u2p:%{_builddir}}"
+>   RPM_OPT_FLAGS="%{optflags}"
+>   RPM_LD_FLAGS="%{?__global_ldflags}"
+>   RPM_ARCH="%{_arch}"
+>   RPM_OS="%{_os}"
+>   export RPM_SOURCE_DIR RPM_BUILD_DIR RPM_OPT_FLAGS RPM_LD_FLAGS RPM_ARCH RPM_OS
+>   RPM_DOC_DIR="%{_docdir}"
+>   export RPM_DOC_DIR
+>   RPM_PACKAGE_NAME="%{name}"
+>   RPM_PACKAGE_VERSION="%{version}"
+>   RPM_PACKAGE_RELEASE="%{release}"
+>   export RPM_PACKAGE_NAME RPM_PACKAGE_VERSION RPM_PACKAGE_RELEASE
+>   LANG=C
+>   export LANG
+>   unset CDPATH DISPLAY ||:
+>   %{?buildroot:RPM_BUILD_ROOT="%{u2p:%{buildroot}}"
+>   export RPM_BUILD_ROOT}
+>   %{?_javaclasspath:CLASSPATH="%{_javaclasspath}"
+>   export CLASSPATH}
+>   PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:%{_libdir}/pkgconfig:%{_datadir}/pkgconfig"
+>   export PKG_CONFIG_PATH
+>   CONFIG_SITE=${CONFIG_SITE:-NONE}
+>   export CONFIG_SITE
+>   
+>   %{verbose:set -x}%{!verbose:exec > /dev/null}
+>   umask 022
+>   cd "%{u2p:%{_builddir}}"
+> -14: ___build_shell	%{?_buildshell:%{_buildshell}}%{!?_buildshell:/bin/sh}
+> -14: ___build_template	#!%{___build_shell}
+> %{___build_pre}
+> %{nil}
+> -14: __aclocal	aclocal
+> -14: __appdata_path	^%{_datadir}/appdata/.*\.appdata\.xml$
+> -14: __appdata_provides	%{_rpmconfigdir}/appdata.prov
+> -14: __ar	ar
+> -14: __arch_install_post	/usr/lib/rpm/check-buildroot
+> -14: __as	as
+> -14: __autoconf	autoconf
+> -14: __autoheader	autoheader
+> -14: __automake	automake
+> -14: __awk	gawk
+> -14: __bzip2	/usr/bin/bzip2
+> -14: __bzr	/usr/bin/bzr
+> -14: __cat	/usr/bin/cat
+> -14: __cc	gcc
+> -14: __check_files	%{_rpmconfigdir}/check-files %{buildroot}
+> -14: __chgrp	/usr/bin/chgrp
+> -14: __chmod	/usr/bin/chmod
+> -14: __chown	/usr/bin/chown
+> -14: __cmake	/usr/bin/cmake
+> -14: __cmake_path	^/usr/lib(64)?/cmake/.*/.*(Config.cmake|-config.cmake)$
+> -14: __cmake_provides	%{_rpmconfigdir}/cmake.prov
+> -14: __cp	/usr/bin/cp
+> -14: __cpio	/usr/bin/cpio
+> -14: __cpp	gcc -E
+> -14: __cxx	g++
+> -14: __dbi_other	mp_mmapsize=128Mb mp_size=1Mb
+> -14: __debug_install_post	
+>    %{_rpmconfigdir}/find-debuginfo.sh %{?_missing_build_ids_terminate_build:--strict-build-id} %{?_include_minidebuginfo:-m} %{?_find_debuginfo_dwz_opts} %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}"
+> %{nil}
+> -14: __desktop_path	^%{_datadir}/applications/.*\.desktop$
+> -14: __desktop_provides	%{_rpmconfigdir}/desktop-file.prov
+> -14: __docdir_path	%{_datadir}/doc:%{_datadir}/man:%{_datadir}/info:%{_datadir}/gtk-doc/html:%{?_docdir}:%{?_mandir}:%{?_infodir}:%{?_javadocdir}:/usr/doc:/usr/man:/usr/info:/usr/X11R6/man
+> -14: __elf_flags	exeonly
+> -14: __elf_magic	^(setuid )?(setgid )?(sticky )?ELF (32|64)-bit.*$
+> -14: __elf_provides	%{_rpmconfigdir}/elfdeps --provides %{?__filter_GLIBC_PRIVATE:--filter-private}
+> -14: __elf_requires	%{_rpmconfigdir}/elfdeps --requires %{?__filter_GLIBC_PRIVATE:--filter-private}
+> -14: __file	/usr/bin/file
+> -14: __find_provides	%{_rpmconfigdir}/find-provides
+> -14: __find_requires	%{_rpmconfigdir}/find-requires
+> -14: __font_magic	[Ff]ont?( (program|collection))?( (text|data))
+> -14: __font_provides	%{_rpmconfigdir}/fontconfig.prov
+> -14: __font_requires	%{nil}
+> -14: __git	/usr/bin/git
+> -14: __global_cflags	-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches %{_hardened_cflags}
+> -14: __global_ldflags	-Wl,-z,relro %{_hardened_ldflags}
+> -14: __gpg	%{_bindir}/gpg2
+> -14: __gpg_reserved_space	4096
+> -14: __gpg_sign_cmd	%{__gpg} 
+> 	gpg --no-verbose --no-armor 
+> 	%{?_gpg_digest_algo:--digest-algo %{_gpg_digest_algo}} 
+> 	--no-secmem-warning 
+> 	-u "%{_gpg_name}" -sbo %{__signature_filename} %{__plaintext_filename}
+> -14: __grep	/usr/bin/grep
+> -14: __gstreamer1_path	^%{_libdir}/gstreamer-1.*/.*.so$
+> -14: __gstreamer1_provides	%{_rpmconfigdir}/gstreamer1.prov
+> -14: __gzip	/usr/bin/gzip
+> -14: __hg	/usr/bin/hg
+> -14= __id	/usr/bin/id
+> -14= __id_u	%{__id} -u
+> -14: __install	/usr/bin/install
+> -14: __isa	%{__isa_name}-%{__isa_bits}
+> -14: __isa_bits	64
+> -14: __isa_name	x86
+> -14: __javadoc_path	^%{_javadocdir}/.[^/]*$
+> -14: __javadoc_requires	%{_rpmconfigdir}/javadoc.req
+> -14: __javadoc_requires_opts	%{?scl:--scl %{?scl}}
+> -14: __kmod_path	^/lib/modules/.*$
+> -14: __kmod_provides	%{_rpmconfigdir}/kmod.prov
+> -14: __ld	/usr/bin/ld
+> -14: __libsymlink_flags	magic_and_path
+> -14: __libsymlink_magic	^symbolic link to .*lib.*.so..*$
+> -14: __libsymlink_path	^.*.so$
+> -14: __libsymlink_requires	%{_rpmconfigdir}/elfdeps --provides --soname-only
+> -14: __libtool_path	^%{_libdir}/.*.la$
+> -14: __libtool_provides	%{_rpmconfigdir}/libtooldeps.sh --provides %{buildroot} %{name}
+> -14: __libtool_requires	%{_rpmconfigdir}/libtooldeps.sh --requires %{buildroot} %{name}
+> -14: __libtoolize	libtoolize
+> -14: __ln_s	ln -s
+> -14: __lrzip	/usr/bin/lrzip
+> -14: __lzip	/usr/bin/lzip
+> -14: __lzma	%__xz --format=lzma
+> -14: __make	/usr/bin/make
+> -14: __maven_path	^%{_datadir}/maven-metadata/.*
+> -14: __maven_provides	%{_rpmconfigdir}/maven.prov
+> -14: __maven_provides_opts	--cachedir %{_builddir}/%{?buildsubdir} --rpm-pid %{lua:print(math.floor(posix.getprocessid("pid")))} %{?scl:--scl %{?scl}}
+> -14: __maven_requires	%{_rpmconfigdir}/maven.req
+> -14: __maven_requires_opts	--cachedir %{_builddir}/%{?buildsubdir} --rpm-pid %{lua:print(math.floor(posix.getprocessid("pid")))} %{?scl:--scl %{?scl}}
+> -14: __mkdir	/usr/bin/mkdir
+> -14: __mkdir_p	/usr/bin/mkdir -p
+> -14: __mono_magic	Mono/.Net assembly
+> -14: __mono_provides	%{_rpmconfigdir}/mono-find-provides %{_builddir}/%{?buildsubdir} %{buildroot} %{_libdir}
+> -14: __mono_requires	%{_rpmconfigdir}/mono-find-requires %{_builddir}/%{?buildsubdir} %{buildroot} %{_libdir}
+> -14: __mv	/usr/bin/mv
+> -14: __nm	/usr/bin/nm
+> -14: __objcopy	/usr/bin/objcopy
+> -14: __objdump	/usr/bin/objdump
+> -14: __ocaml_magic	^(Objective caml|OCaml) .*$
+> -14: __ocaml_provides	%{_rpmconfigdir}/ocaml-find-provides.sh
+> -14: __ocaml_requires	%{_rpmconfigdir}/ocaml-find-requires.sh
+> -14: __os_install_post	
+>     /usr/lib/rpm/brp-compress 
+>     %{!?__debug_package:
+>     /usr/lib/rpm/brp-strip %{__strip} 
+>     /usr/lib/rpm/brp-strip-comment-note %{__strip} %{__objdump} 
+>     } 
+>     /usr/lib/rpm/brp-strip-static-archive %{__strip} 
+>     %{?py_auto_byte_compile:/usr/lib/rpm/brp-python-bytecompile %{__python} %{?_python_bytecompile_errors_terminate_build}} 
+>     /usr/lib/rpm/brp-python-hardlink 
+>     %{!?__jar_repack:/usr/lib/rpm/redhat/brp-java-repack-jars} 
+> %{nil}
+> -14: __osgi_path	^(.*\.jar|((%{_prefix}/lib(64)?|%{_datadir})/.*/META-INF/MANIFEST.MF))$
+> -14: __osgi_provides	%{_rpmconfigdir}/osgi.prov
+> -14: __osgi_provides_opts	--cachedir %{_builddir}/%{?buildsubdir} --rpm-pid %{lua:print(math.floor(posix.getprocessid("pid")))} %{?scl:--scl %{?scl}}
+> -14: __osgi_requires	%{!?scl:%{_rpmconfigdir}/osgi.req}%{?scl:%{_root_bindir}/true}
+> -14: __osgi_requires_opts	--cachedir %{_builddir}/%{?buildsubdir} --rpm-pid %{lua:print(math.floor(posix.getprocessid("pid")))} %{?scl:--scl %{?scl}}
+> -14: __patch	/usr/bin/patch
+> -14: __perl	/usr/bin/perl
+> -14: __perl_check_pre	%{expand: 
+> %{?__spec_check_pre} 
+> pushd %{buildsubdir} 
+> %define perl_br_testdir %{buildroot}%{perl_testdir}/%{cpan_dist_name} 
+> %{__mkdir_p} %{perl_br_testdir} 
+> %{__tar} -cf - %{__perl_test_dirs} | ( cd %{perl_br_testdir} && %{__tar} -xf - ) 
+> find . -maxdepth 1 -type f -name '*META*' -exec %{__cp} -vp {} %{perl_br_testdir} ';' 
+> find %{perl_br_testdir} -type f -exec %{__chmod} -c -x {} ';' 
+> T_FILES=`find %{perl_br_testdir} -type f -name '*.t'` 
+> %fix_shbang_line $T_FILES 
+> %{__chmod} +x $T_FILES 
+> %{_fixperms} %{perl_br_testdir} 
+> popd 
+> }
+> -14: __perl_flags	exeonly
+> -14: __perl_magic	^.*[Pp]erl .*$
+> -14: __perl_requires	%{_rpmconfigdir}/perl.req
+> -14: __perllib_flags	magic_and_path
+> -14: __perllib_magic	^Perl[[:digit:]] module source.*
+> -14: __perllib_path	\.pm$
+> -14: __perllib_provides	%{_rpmconfigdir}/perl.prov
+> -14: __perllib_requires	%{_rpmconfigdir}/perl.req
+> -14: __pkgconfig_path	^((%{_libdir}|%{_datadir})/pkgconfig/.*.pc|%{_bindir}/pkg-config)$
+> -14: __pkgconfig_provides	%{_rpmconfigdir}/pkgconfigdeps.sh --provides
+> -14: __pkgconfig_requires	%{_rpmconfigdir}/pkgconfigdeps.sh --requires
+> -14: __plasma4_path	^%{_datadir}/kde4/services/.*\.desktop$
+> -14: __plasma4_provides	%{_rpmconfigdir}/plasma4.prov
+> -14: __plasma4_requires	%{_rpmconfigdir}/plasma4.req
+> -14: __plugindir	%{_libdir}/rpm-plugins
+> -14: __pom_call	/usr/bin/python3 /usr/share/java-utils/pom_editor.py pom_
+> -14: __psdriver_magic	^PPD file.*$
+> -14: __psdriver_path	^(/usr/lib/cups/driver/.*|%{_datadir}/cups/drv/.*.drv)$
+> -14: __psdriver_provides	%{_rpmconfigdir}/postscriptdriver.prov
+> -14: __python	/usr/bin/python
+> -14: __python2	/usr/bin/python2
+> -14: __python_magic	[Pp]ython.*(executable|byte-compiled)
+> -14: __python_path	^((/usr/lib(64)?/python[[:digit:]]\.[[:digit:]]/.*))|(%{_bindir}/python[[:digit:]]\.[[:digit:]]))$
+> -14: __python_provides	%{_rpmconfigdir}/pythondistdeps.py --provides --majorver-provides
+> -14: __python_requires	%{_rpmconfigdir}/pythondeps.sh --requires
+> -14: __quilt	/usr/bin/quilt
+> -14: __ranlib	ranlib
+> -14: __remsh	%{__rsh}
+> -14: __restorecon	/sbin/restorecon
+> -14: __rm	/usr/bin/rm
+> -14: __rsh	/usr/bin/rsh
+> -14: __scm	patch
+> -14: __scm_apply_bzr(qp:m:)	
+> %{__patch} %{-p:-p%{-p*}} %{-q:-s}
+> %{__bzr} commit %{-q} -m %{-m*}
+> -14: __scm_apply_git(qp:m:)	
+> %{__git} apply --index %{-p:-p%{-p*}} -
+> %{__git} commit %{-q} -m %{-m*} --author "%{__scm_author}"
+> -14: __scm_apply_git_am(qp:m:)	
+> %{__git} am %{-q} %{-p:-p%{-p*}}
+> -14: __scm_apply_hg(qp:m:)	
+> %{__hg} import - %{-p:-p%{-p*}} %{-q} -m %{-m*} --user "%{__scm_author}"
+> -14: __scm_apply_patch(qp:m:)	
+> %{__patch} %{-p:-p%{-p*}} %{-q:-s} --fuzz=%{_default_patch_fuzz} %{_default_patch_flags}
+> -14: __scm_apply_quilt(qp:m:)	
+> %{__quilt} import %{-p:-p%{-p*}} %{1} && %{__quilt} push
+> -14: __scm_author	%{__scm_username} %{__scm_usermail}
+> -14: __scm_setup_bzr(q)	
+> %{__bzr} init %{-q}
+> %{__bzr} whoami --branch "%{__scm_author}"
+> %{__bzr} add .
+> %{__bzr} commit %{-q} -m "%{name}-%{version} base"
+> -14: __scm_setup_git(q)	
+> %{__git} init %{-q}
+> %{__git} config user.name "%{__scm_username}"
+> %{__git} config user.email "%{__scm_usermail}"
+> %{__git} add .
+> %{__git} commit %{-q} -a\
+> 	--author "%{__scm_author}" -m "%{name}-%{version} base"
+> -14: __scm_setup_git_am(q)	
+> %{expand:%__scm_setup_git %{-q}}
+> -14: __scm_setup_hg(q)	
+> %{__hg} init %{-q} .
+> %{__hg} add %{-q} .
+> %{__hg} commit %{-q} --user "%{__scm_author}" -m "%{name}-%{version} base"
+> -14: __scm_setup_patch(q)	%{nil}
+> -14: __scm_setup_quilt(q)	%{nil}
+> -14: __scm_usermail	<rpm-build>
+> -14: __scm_username	rpm-build
+> -14: __script_flags	exeonly
+> -14: __script_magic	^.* script[, ].*$
+> -14: __script_requires	%{_rpmconfigdir}/script.req
+> -14: __sed	/usr/bin/sed
+> -14: __semodule	/usr/bin/semodule
+> -14: __spec_build_args	%{___build_args}
+> -14: __spec_build_body	%{___build_body}
+> -14: __spec_build_cmd	%{___build_cmd}
+> -14: __spec_build_post	%{___build_post}
+> -14: __spec_build_pre	%{___build_pre}
+> -14: __spec_build_shell	%{___build_shell}
+> -14: __spec_build_template	#!%{__spec_build_shell}
+> %{__spec_build_pre}
+> %{nil}
+> -14: __spec_check_args	%{___build_args}
+> -14: __spec_check_body	%{___build_body}
+> -14: __spec_check_cmd	%{___build_cmd}
+> -14: __spec_check_post	%{___build_post}
+> -14: __spec_check_pre	%{___build_pre}
+> -14: __spec_check_shell	%{___build_shell}
+> -14: __spec_check_template	#!%{__spec_check_shell}
+> %{__spec_check_pre}
+> %{nil}
+> -14: __spec_clean_args	%{___build_args}
+> -14: __spec_clean_body	%{___build_body}
+> -14: __spec_clean_cmd	%{___build_cmd}
+> -14: __spec_clean_post	%{___build_post}
+> -14: __spec_clean_pre	%{___build_pre}
+> -14: __spec_clean_shell	%{___build_shell}
+> -14: __spec_clean_template	#!%{__spec_clean_shell}
+> %{__spec_clean_pre}
+> %{nil}
+> -14: __spec_install_args	%{___build_args}
+> -14: __spec_install_body	%{___build_body}
+> -14: __spec_install_cmd	%{___build_cmd}
+> -14: __spec_install_post	
+>     %{?__debug_package:%{__debug_install_post}}
+>     %{__arch_install_post}
+>     %{__os_install_post}
+> %{nil}
+> -14: __spec_install_pre	%{___build_pre}
+>     [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "${RPM_BUILD_ROOT}"
+>     mkdir -p `dirname "$RPM_BUILD_ROOT"`
+>     mkdir "$RPM_BUILD_ROOT"
+> %{nil}
+> -14: __spec_install_shell	%{___build_shell}
+> -14: __spec_install_template	#!%{__spec_install_shell}
+> %{__spec_install_pre}
+> %{nil}
+> -14: __spec_prep_args	%{___build_args}
+> -14: __spec_prep_body	%{___build_body}
+> -14: __spec_prep_cmd	%{___build_cmd}
+> -14: __spec_prep_post	%{___build_post}
+> -14: __spec_prep_pre	%{___build_pre}
+> -14: __spec_prep_shell	%{___build_shell}
+> -14: __spec_prep_template	#!%{__spec_prep_shell}
+> %{__spec_prep_pre}
+> %{nil}
+> -14: __spec_rmbuild_args	%{___build_args}
+> -14: __spec_rmbuild_body	%{___build_body}
+> -14: __spec_rmbuild_cmd	%{___build_cmd}
+> -14: __spec_rmbuild_post	%{___build_post}
+> -14: __spec_rmbuild_pre	%{___build_pre}
+> -14: __spec_rmbuild_shell	%{___build_shell}
+> -14: __spec_rmbuild_template	#!%{__spec_rmbuild_shell}
+> %{__spec_rmbuild_pre}
+> %{nil}
+> -14: __ssh	/usr/bin/ssh
+> -14: __strip	/usr/bin/strip
+> -14: __tar	/usr/bin/tar
+> -14: __transaction_ima	%{__plugindir}/ima.so
+> -14: __transaction_selinux	%{__plugindir}/selinux.so
+> -14: __transaction_syslog	%{__plugindir}/syslog.so
+> -14: __transaction_systemd_inhibit	%{__plugindir}/systemd_inhibit.so
+> -14: __unzip	/usr/bin/unzip
+> -14: __urlhelper_proxyopts	%{?_httpproxy:--proxy %{_httpproxy}%{?_httpport::%{_httpport}}}%{!?_httpproxy:%{nil}}
+> -14: __urlhelpercmd	/usr/bin/curl
+> -14: __urlhelperopts	--silent --show-error --fail --globoff --location -o
+> -14= __vsflags	0xf0000
+> -14: __xz	/usr/bin/xz
+> -14= _arch	x86_64
+> -14: _binaries_in_noarch_packages_terminate_build	1
+> -14: _binary_filedigest_algorithm	8
+> -14: _binary_payload	w2.xzdio
+> -14: _bindir	%{_exec_prefix}/bin
+> -14: _binfmtdir	/usr/lib/binfmt.d
+> -14: _build	%{_host}
+> -14: _build_alias	%{_host_alias}
+> -14: _build_arch	x86_64
+> -14: _build_cpu	%{_host_cpu}
+> -14: _build_name_fmt	%%{ARCH}/%%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+> -14: _build_os	%{_host_os}
+> -14: _build_vendor	%{_host_vendor}
+> -14= _builddir	%{_topdir}/BUILD
+> -14= _buildrootdir	%{_topdir}/BUILDROOT
+> -14: _buildshell	/bin/sh
+> -14: _bzip2bin	%{__bzip2}
+> -14: _changelog_trimtime	0
+> -14: _cmake_lib_suffix64	-DLIB_SUFFIX=64
+> -14: _cmake_skip_rpath	-DCMAKE_SKIP_RPATH:BOOL=ON
+> -14: _cmake_version	3.6.2
+> -14: _cmmscolordir	%_colordir/cmms
+> -14: _colordir	%_datadir/color
+> -14: _configure	./configure
+> -14: _configure_gnuconfig_hack	1
+> -14: _configure_libtool_hardening_hack	1
+> -14: _cups_serverbin	%(/usr/bin/cups-config --serverbin)
+> -14: _datadir	%{_datarootdir}
+> -14: _datarootdir	%{_prefix}/share
+> -14: _dbi_config	%{?__dbi_other}
+> -14: _dbi_config_Packages	%{?_dbi_config} lockdbfd
+> -14: _dbpath	%{_var}/lib/rpm
+> -14: _dbpath_rebuild	%{_dbpath}
+> -14: _default_patch_flags	--no-backup-if-mismatch
+> -14: _default_patch_fuzz	0
+> -14: _defaultdocdir	%{_datadir}/doc
+> -14: _defaultlicensedir	%{_datadir}/licenses
+> -14= _disable_source_fetch	1
+> -14: _do_gconf_schema_remove	
+>         if test -f %{_sysconfdir}/gconf/schemas/"$schema".schemas ; then 
+>             export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` 
+>             gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/"$schema".schemas > /dev/null || : 
+>         fi 
+> %{nil}
+>  -3: _docdir	%{_defaultdocdir}
+> -14: _docdir_fmt	%%{NAME}
+> -14: _dwz_limit	%{expand:%%{?%{1}_%{_arch}}%%{!?%{1}_%{_arch}:%%%{1}}}
+> -14: _dwz_low_mem_die_limit	10000000
+> -14: _dwz_low_mem_die_limit_armv5tel	4000000
+> -14: _dwz_low_mem_die_limit_armv7hl	4000000
+> -14: _dwz_max_die_limit	50000000
+> -14: _dwz_max_die_limit_armv5tel	10000000
+> -14: _dwz_max_die_limit_armv7hl	10000000
+> -14: _dwz_max_die_limit_x86_64	110000000
+> -14: _empty_manifest_terminate_build	1
+> -14: _enable_debug_packages	1
+> -14: _exec_prefix	%{_prefix}
+> -14: _file_context_file	%{_sysconfdir}/selinux/${SELINUXTYPE}/contexts/files/file_contexts
+> -14: _file_context_file_pre	%{_localstatedir}/lib/rpm-state/file_contexts.pre
+> -14: _fileattrsdir	%{_rpmconfigdir}/fileattrs
+> -14: _filter_GLIBC_PRIVATE	0
+> -14: _find_debuginfo_dwz_opts	--run-dwz\
+>    --dwz-low-mem-die-limit %{_dwz_limit _dwz_low_mem_die_limit}\
+>    --dwz-max-die-limit %{_dwz_limit _dwz_max_die_limit}
+> -14: _fixperms	%{__chmod} -Rf a+rX,u+w,g-w,o-w
+> -14: _fmoddir	%{_libdir}/gfortran/modules
+> -14: _gnu	-gnu
+> -14: _gzipbin	%{__gzip}
+> -14: _hardened_build	1
+> -14: _hardened_cflags	%{?_hardened_build:%{_hardening_cflags}}
+> -14: _hardened_ldflags	%{?_hardened_build:%{_hardening_ldflags}}
+> -14: _hardening_cflags	-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1
+> -14: _hardening_ldflags	-specs=/usr/lib/rpm/redhat/redhat-hardened-ld
+> -14: _hkp_keyserver	http://pgp.mit.edu
+> -14: _hkp_keyserver_query	%{_hkp_keyserver}:11371/pks/lookup?op=get&search=0x
+> -14: _host	x86_64-redhat-linux-gnu
+> -14: _host_alias	x86_64-redhat-linux-gnu%{nil}
+> -14: _host_cpu	x86_64
+> -14: _host_os	linux
+> -14: _host_vendor	redhat
+> -14: _icccolordir	%_colordir/icc
+> -14: _include_minidebuginfo	1
+> -14: _includedir	%{_prefix}/include
+> -14: _infodir	%{_datarootdir}/info
+> -14: _initddir	%{_sysconfdir}/rc.d/init.d
+> -14: _initrddir	%{_initddir}
+> -14= _install_langs	all
+> -14: _install_script_path	/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11R6/bin
+> -14: _invalid_encoding_terminates_build	0
+> -14: _isa	%{?__isa:(%{__isa})}%{!?__isa:%{nil}}
+> -14: _ivyxmldir	%{_datadir}/ivy-xmls
+> -14: _javaconfdir	%{_sysconfdir}/java
+> -14: _javadir	%{_datadir}/java
+> -14: _javadocdir	%{_datadir}/javadoc
+> -14: _jnidir	%{_prefix}/lib/java
+> -14: _journalcatalogdir	/usr/lib/systemd/catalog
+> -14: _jvmcommondatadir	%{_datadir}/jvm-commmon
+> -14: _jvmcommonlibdir	%{_prefix}/lib/jvm-commmon
+> -14: _jvmcommonsysconfdir	%{_sysconfdir}/jvm-commmon
+> -14: _jvmdatadir	%{_datadir}/jvm
+> -14: _jvmdir	%{_prefix}/lib/jvm
+> -14: _jvmjardir	%{_prefix}/lib/jvm-exports
+> -14: _jvmlibdir	%{_prefix}/lib/jvm
+> -14: _jvmprivdir	%{_prefix}/lib/jvm-private
+> -14: _jvmsysconfdir	%{_sysconfdir}/jvm
+> -14: _kde4_appsdir	%_kde4_sharedir/kde4/apps
+> -14: _kde4_bindir	%_kde4_prefix/bin
+> -14: _kde4_build_tests	-DKDE4_BUILD_TESTS:BOOL=OFF
+> -14: _kde4_buildtype	release
+> -14: _kde4_configdir	%_kde4_sharedir/config
+> -14: _kde4_datadir	%_datadir
+> -14: _kde4_docdir	/usr/share/doc
+> -14: _kde4_iconsdir	%_kde4_sharedir/icons
+> -14: _kde4_includedir	%_kde4_prefix/include/kde4
+> -14: _kde4_libdir	%_libdir
+> -14: _kde4_libexecdir	%_libexecdir/kde4
+> -14: _kde4_macros_api	2
+> -14: _kde4_prefix	%_prefix
+> -14: _kde4_sbindir	%_kde4_prefix/sbin
+> -14: _kde4_sharedir	%_datadir
+> -14: _kde4_sysconfdir	%_sysconfdir
+> -14: _kde4_version	%((kde4-config --kde-version 2>/dev/null || echo 4.3.98) | cut -d' ' -f1 )
+> -14: _keyringpath	%{_dbpath}/pubkeys/
+> -14: _kf5_archdatadir	%_qt5_archdatadir
+> -14: _kf5_bindir	%_kf5_prefix/bin
+> -14: _kf5_buildtype	release
+> -14: _kf5_datadir	%_datadir
+> -14: _kf5_docdir	/usr/share/doc
+> -14: _kf5_includedir	%_includedir/KF5
+> -14: _kf5_libdir	%_libdir
+> -14: _kf5_libexecdir	%_libexecdir/kf5
+> -14: _kf5_mandir	%_kf5_datadir/man
+> -14: _kf5_metainfodir	%_kf5_datadir/appdata
+> -14: _kf5_plugindir	%_qt5_plugindir/kf5
+> -14: _kf5_prefix	%_prefix
+> -14: _kf5_qmldir	%_qt5_prefix/qml
+> -14: _kf5_qtplugindir	%_qt5_plugindir
+> -14: _kf5_sysconfdir	%_sysconfdir
+> -14: _kf5_version	5.27.0
+> -14: _lib	lib64
+> -14: _libdir	%{_prefix}/lib64
+> -14: _libexecdir	%{_exec_prefix}/libexec
+>  -3: _licensedir	%{_defaultlicensedir}
+> -14: _localstatedir	/var
+> -14: _mandir	%{_datarootdir}/man
+> -14: _mavenpomdir	%{_datadir}/maven-poms
+> -14: _missing_build_ids_terminate_build	1
+> -14: _missing_doc_files_terminate_build	1
+> -14: _modulesdir	%{_datadir}/modulefiles
+> -14: _monodir	%{_prefix}/lib/mono
+> -14: _monogacdir	%{_monodir}/gac
+> -14: _oldincludedir	/usr/include
+> -14: _os	linux
+> -14: _pkgdocdir	%{_docdir}/%{name}
+> -14: _prefix	/usr
+> -14: _presetdir	/usr/lib/systemd/system-preset
+> -14: _python_bytecompile_errors_terminate_build	1
+> -14: _qt4	qt
+> -14: _qt48	%{_qt4_version}
+> -14: _qt4_bindir	%{_qt4_prefix}/bin
+> -14: _qt4_datadir	%{_qt4_prefix}
+> -14: _qt4_demosdir	%{_qt4_prefix}/demos
+> -14: _qt4_docdir	%{_docdir}/qt4
+> -14: _qt4_epoch	1
+> -14: _qt4_evr	1:4.8.7-18.fc25
+> -14: _qt4_examples	%{_qt4_prefix}/examples
+> -14: _qt4_examplesdir	%{_qt4_prefix}/examples
+> -14: _qt4_headerdir	%{_includedir}
+> -14: _qt4_importdir	%{_qt4_prefix}/imports
+> -14: _qt4_ldflags	%{?__global_ldflags}
+> -14: _qt4_libdir	%{_libdir}
+> -14: _qt4_optflags	%{optflags}
+> -14: _qt4_plugindir	%{_qt4_prefix}/plugins
+> -14: _qt4_prefix	%{_libdir}/qt4
+> -14: _qt4_qmake	%{_qt4_bindir}/qmake
+> -14: _qt4_qmake_flags	\
+>   QMAKE_CFLAGS_DEBUG="${CFLAGS:-%{_qt4_optflags}}" \
+>   QMAKE_CFLAGS_RELEASE="${CFLAGS:-%{_qt4_optflags}}" \
+>   QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS:-%{_qt4_optflags}}" \
+>   QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS:-%{_qt4_optflags}}" \
+>   QMAKE_LFLAGS_DEBUG="${LDFLAGS:-%{_qt4_ldflags}}" \
+>   QMAKE_LFLAGS_RELEASE="${LDFLAGS:-%{_qt4_ldflags}}" \
+>   QMAKE_STRIP=
+> -14: _qt4_sysconfdir	%{_sysconfdir}
+> -14: _qt4_translationdir	%{_datadir}/qt4/translations
+> -14: _qt4_version	4.8.7
+> -14: _qt5	qt5-qtbase
+> -14: _qt5_archdatadir	%{_qt5_prefix}
+> -14: _qt5_bindir	%{_qt5_prefix}/bin
+> -14: _qt5_cflags	%{nil}
+> -14: _qt5_cxxflags	%{nil}
+> -14: _qt5_datadir	%{_datadir}/qt5
+> -14: _qt5_docdir	%{_docdir}/qt5
+> -14: _qt5_epoch	0
+> -14: _qt5_evr	5.7.0-3.fc25
+> -14: _qt5_examplesdir	%{_qt5_prefix}/examples
+> -14: _qt5_headerdir	%{_includedir}/qt5
+> -14: _qt5_importdir	%{_qt5_archdatadir}/imports
+> -14: _qt5_includedir	%{_includedir}/qt5
+> -14: _qt5_ldflags	%{nil}%{?__global_ldflags}
+> -14: _qt5_libdir	%{_libdir}
+> -14: _qt5_libexecdir	%{_qt5_archdatadir}/libexec
+> -14: _qt5_optflags	%{optflags}  -fno-delete-null-pointer-checks
+> -14: _qt5_plugindir	%{_qt5_archdatadir}/plugins
+> -14: _qt5_prefix	%{_libdir}/qt5
+> -14: _qt5_qmake	%{_qt5_bindir}/qmake
+> -14: _qt5_qmake_flags	\
+>   QMAKE_CFLAGS_DEBUG="${CFLAGS:-%{_qt5_optflags} %{?_qt5_cflags}}" \
+>   QMAKE_CFLAGS_RELEASE="${CFLAGS:-%{_qt5_optflags} %{?_qt5_cflags}}" \
+>   QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS:-%{_qt5_optflags} %{?_qt5_cxxflags}}" \
+>   QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS:-%{_qt5_optflags} %{?_qt5_cxxflags}}" \
+>   QMAKE_LFLAGS_DEBUG="${LDFLAGS:-%{_qt5_ldflags}}" \
+>   QMAKE_LFLAGS_RELEASE="${LDFLAGS:-%{_qt5_ldflags}}" \
+>   QMAKE_STRIP=
+> -14: _qt5_qmldir	%{_qt5_archdatadir}/qml
+> -14: _qt5_settingsdir	%{_sysconfdir}/xdg
+> -14: _qt5_sysconfdir	%{_qt5_settingsdir}
+> -14: _qt5_translationdir	%{_datadir}/qt5/translations
+> -14: _qt5_version	5.7.0
+> -14: _query_all_fmt	%%{nvra}
+> -14: _query_selector_match	default
+> -14: _rpmconfigdir	%{getconfdir}
+> -14= _rpmdir	%{_topdir}/RPMS
+> -14: _rpmfilename	%{_build_name_fmt}
+> -14: _rpmlock_path	%{_dbpath}/.rpm.lock
+> -14: _rundir	/run
+> -14: _sbindir	%{_exec_prefix}/sbin
+> -14: _selinux_policy_version	3.13.1-220.fc25
+> -14: _settingscolordir	%_colordir/settings
+> -14: _sharedstatedir	/var/lib
+> -14: _sip_api	%{_sip_api_major}.%{_sip_api_minor}
+> -14: _sip_api_major	11
+> -14: _sip_api_minor	3
+> -14: _smp_mflags	%([ -z "$RPM_BUILD_NCPUS" ] \
+> 	&& RPM_BUILD_NCPUS="`/usr/bin/getconf _NPROCESSORS_ONLN`"; \
+>         ncpus_max=%{?_smp_ncpus_max}; \
+>         if [ -n "$ncpus_max" ] && [ "$ncpus_max" -gt 0 ] && [ "$RPM_BUILD_NCPUS" -gt "$ncpus_max" ]; then RPM_BUILD_NCPUS="$ncpus_max"; fi; \
+>         if [ "$RPM_BUILD_NCPUS" -gt 1 ]; then echo "-j$RPM_BUILD_NCPUS"; fi)
+> -14: _smp_ncpus_max	16
+> -14: _source_filedigest_algorithm	8
+> -14= _sourcedir	%{_topdir}/SOURCES
+> -14= _specdir	%{_topdir}/SPECS
+> -14= _srcrpmdir	%{_topdir}/SRPMS
+> -14: _syscolordir	%_colordir
+> -14: _sysconfdir	/etc
+> -14: _sysctldir	/usr/lib/sysctl.d
+> -14: _systemdgeneratordir	/usr/lib/systemd/system-generators
+> -14: _systemdusergeneratordir	/usr/lib/systemd/user-generators
+> -14: _sysusersdir	/usr/lib/sysusers.d
+> -11: _target	x86_64-linux
+> -14: _target_alias	%{_host_alias}
+> -11= _target_cpu	x86_64
+> -11= _target_os	linux
+> -14: _target_platform	%{_target_cpu}-%{_vendor}-%{_target_os}%{?_gnu}
+> -14: _target_vendor	%{_host_vendor}
+> -14: _texmf	/usr/share/texlive/texmf-local
+> -14: _texmf_conf	/usr/share/texlive/texmf-config
+> -14: _texmf_main	/usr/share/texlive/texmf-dist
+> -14: _texmf_var	/var/lib/texmf
+> -14: _texmf_vendor	/usr/share/texlive/texmf-dist
+> -14: _tmpfilesdir	/usr/lib/tmpfiles.d
+> -14= _tmppath	%{_var}/tmp
+> -14= _topdir	%{getenv:HOME}/rpmbuild
+> -14= _transaction_color	3
+> -14: _udevhwdbdir	/usr/lib/udev/hwdb.d
+> -14: _udevrulesdir	/usr/lib/udev/rules.d
+> -14: _unitdir	/usr/lib/systemd/system
+> -14: _unpackaged_files_terminate_build	1
+> -14: _unzipbin	%{__unzip}
+> -14: _urlhelper	%{__urlhelpercmd} %{?__urlhelper_localopts} %{?__urlhelper_proxyopts} %{__urlhelperopts}
+> -14: _use_internal_dependency_generator	1
+> -14: _userunitdir	/usr/lib/systemd/user
+> -14: _usr	/usr
+> -14: _usrsrc	%{_usr}/src
+> -14= _var	/var
+> -14= _vendor	redhat
+> -14= _vsflags_build	%{__vsflags}
+> -14: _vsflags_erase	%{__vsflags}
+> -14: _vsflags_install	%{__vsflags}
+> -14: _vsflags_query	%{__vsflags}
+> -14: _vsflags_query_rpmdb	0xf0f00
+> -14: _vsflags_rebuilddb	0xc0c00
+> -14: _vsflags_verify	%{__vsflags}
+> -14: _wrong_version_format_terminate_build	1
+> -14: add_jvm_extension	JAVA_LIBDIR=%{buildroot}%{_javadir} %{_bindir}/jvmjar -l
+> -14: add_maven_depmap(f:a:v:)	
+> set -e 
+> # default values 
+> %if %# == 0 
+>    _pompart="JPP-%{?scl:%{pkg_name}}%{!?scl:%{name}}.pom" 
+>    _jarpart="%{?scl:%{pkg_name}}%{!?scl:%{name}}.jar" 
+> %else 
+>    _pompart="%1" 
+>    _jarpart="%2" 
+> %endif 
+> _filelist=".mfiles%{-f*:-%{-f*}}" 
+> install -dm 755 %{buildroot}%{_datadir}/maven-metadata 
+> _jbase= 
+> _jpath= 
+> for _dir in %{_jnidir} %{_javadir}; do 
+>     if [ -f %{buildroot}$_dir/$_jarpart ]; then 
+> 	_jbase="%{buildroot}$_dir" 
+> 	_jpath="$_jbase/$_jarpart" 
+>     fi 
+> done 
+> %if %# != 1 
+>     [ -z "$_jpath" ] && (echo "%0 error: $_jarpart - file not found" 1>&2; exit 1) 
+> %endif 
+> /usr/bin/python3 /usr/share/java-utils/maven_depmap.py %{-a} %{-v*:-r %{-v*}} \
+>                  -n "%{?scl}" \
+>                  --pom-base %{buildroot}%{_mavenpomdir} \
+>                  --jar-base "$_jbase" \
+>                  %{buildroot}%{_datadir}/maven-metadata/%{?scl:%{pkg_name}}%{!?scl:%{name}}%{-f*:-%{-f*}}.xml \
+>                  %{buildroot}%{_mavenpomdir}/$_pompart \
+> %if %# == 2 
+>           "${_jpath}" \
+> %endif 
+> %if %# == 0 
+>           "${_jpath}" \
+> %endif 
+>         >> ${_filelist} 
+> sed -i 's:%{buildroot}::' ${_filelist} 
+> sort -u -o ${_filelist} ${_filelist} 
+> 
+> %{nil}
+> -14: alpha	alpha alphaev56 alphaev6 alphaev67
+> -14: ant	JAVA_HOME=%{java_home} ant
+> -14: apply_patch(qp:m:)	
+> %{lua:
+> local file = rpm.expand("%{1}")
+> if posix.access(file, "r") then
+>     local options = rpm.expand("%{-q} %{-p:-p%{-p*}} %{-m:-m%{-m*}}")
+>     local scm_apply = rpm.expand("%__scm_apply_%{__scm}")
+>     print(rpm.expand("%{uncompress:"..file.."} | "..scm_apply.." "..options.."\n"))
+> else
+>     print("echo 'Cannot read "..file.."'; exit 1;".."\n")
+> end}
+> -14: arm	armv3l armv4b armv4l armv4tl armv5tel armv5tejl armv6l armv6hl armv7l armv7hl armv7hnl
+>   0= assume_meego	0
+> -14: autopatch(vp:)	
+> %{lua:
+> local options = rpm.expand("%{!-v:-q} %{-p:-p%{-p*}} ")
+> for i, p in ipairs(patches) do
+>     print(rpm.expand("%apply_patch -m %{basename:"..p.."}  "..options..p.."\n"))
+> end}
+> -14: autosetup(a:b:cDn:TvNS:p:)	
+> %setup %{-a} %{-b} %{-c} %{-D} %{-n} %{-T} %{!-v:-q}
+> %{-S:%global __scm %{-S*}}
+> %{-S:%{expand:%__scm_setup_%{-S*} %{!-v:-q}}}
+> %{!-N:%autopatch %{-v} %{-p:-p%{-p*}}}
+> -14: bcond_with	%{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+> -14: bcond_without	%{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+> -14: binfmt_apply	
+> /usr/lib/systemd/systemd-binfmt %{?*} >/dev/null 2>&1 || : 
+> %{nil}
+>  -3: buildrequires	desktop-file-utils
+>  -3: buildroot	/home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64
+> -14: cmake	
+>   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; 
+>   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; 
+>   FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; 
+>   FCFLAGS="${FCFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FCFLAGS ; 
+>   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} 
+>   %__cmake \
+>         -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
+>         -DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
+>         -DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
+>         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+>         -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
+>         -DINCLUDE_INSTALL_DIR:PATH=%{_includedir} \
+>         -DLIB_INSTALL_DIR:PATH=%{_libdir} \
+>         -DSYSCONF_INSTALL_DIR:PATH=%{_sysconfdir} \
+>         -DSHARE_INSTALL_PREFIX:PATH=%{_datadir} \
+> %if "%{?_lib}" == "lib64" 
+>         %{?_cmake_lib_suffix64} \
+> %endif 
+>         -DBUILD_SHARED_LIBS:BOOL=ON
+> -14: cmake3	%cmake
+> -14: cmake_kde4	
+>   QTDIR="%{_qt4_prefix}" ; export QTDIR ; 
+>   PATH="%{_qt4_bindir}:$PATH" ; export PATH ; 
+>   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; 
+>   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; 
+>   FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; 
+>   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} 
+>   %{__cmake} \
+>     -DBUILD_SHARED_LIBS:BOOL=ON \
+>     -DCMAKE_BUILD_TYPE=%{_kde4_buildtype} \
+>     -DCMAKE_INSTALL_PREFIX:PATH=%{_kde4_prefix} \
+>     -DCMAKE_USE_RELATIVE_PATHS:BOOL=ON \
+>     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+>     -DDATA_INSTALL_DIR:PATH=%{_kde4_appsdir} \
+>     -DINCLUDE_INSTALL_DIR:PATH=%{_kde4_includedir} \
+>     -DLIB_INSTALL_DIR:PATH=%{_kde4_libdir} \
+>     %{?_kde4_build_tests} \
+> %if "%{?_lib}" == "lib64" 
+>      %{?_cmake_lib_suffix64} \
+> %endif 
+>     -DLIBEXEC_INSTALL_DIR:PATH=%{_kde4_libexecdir} \
+>     -DSYSCONF_INSTALL_DIR:PATH=%{_kde4_sysconfdir}
+> -14: cmake_kf5	
+>   QTDIR="%{_qt5_prefix}" ; export QTDIR ; 
+>   PATH="%{_qt5_bindir}:$PATH" ; export PATH ; 
+>   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; 
+>   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; 
+>   FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; 
+>   %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} 
+>   %{?fedora:%{__cmake}}%{?rhel:%{__cmake3}} \
+>     -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
+>     -DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
+>     -DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
+>     -DBUILD_SHARED_LIBS:BOOL=ON \
+>     -DBUILD_TESTING:BOOL=FALSE \
+>     -DCMAKE_BUILD_TYPE=%{_kf5_buildtype} \
+>     -DCMAKE_INSTALL_INCLUDEDIR_KF5:PATH=%{_kf5_includedir} \
+>     -DCMAKE_INSTALL_LIBEXECDIR_KF5:PATH=%{_kf5_libexecdir} \
+>     -DCMAKE_INSTALL_PREFIX:PATH=%{_kf5_prefix} \
+>     -DCMAKE_USE_RELATIVE_PATHS:BOOL=ON \
+>     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+>     -DECM_MKSPECS_INSTALL_DIR:PATH=%{_kf5_archdatadir}/mkspecs/modules \
+>     -DKDE_INSTALL_BINDIR:PATH=%{_kf5_bindir} \
+>     -DKDE_INSTALL_INCLUDEDIR:PATH=%{_includedir} \
+>     -DKDE_INSTALL_KCFGDIR:PATH=%{_datadir}/config.kcfg \
+>     -DKDE_INSTALL_LIBDIR:PATH=%{_kf5_libdir} \
+>     -DKDE_INSTALL_LIBEXECDIR:PATH=%{_libexecdir} \
+>     -DKDE_INSTALL_METAINFODIR:PATH=%{_kf5_metainfodir} \
+>     -DKDE_INSTALL_PLUGINDIR:PATH=%{_qt5_plugindir} \
+>     -DKDE_INSTALL_QMLDIR:PATH=%{_kf5_qmldir} \
+>     -DKDE_INSTALL_QTPLUGINDIR:PATH=%{_qt5_plugindir} \
+>     -DKDE_INSTALL_QTQUICKIMPORTSDIR:PATH=%{_qt5_importdir} \
+>     -DKDE_INSTALL_SYSCONFDIR:PATH=%{_kf5_sysconfdir} \
+>     -DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
+> -14: configure	
+>   CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; 
+>   CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; 
+>   FFLAGS="${FFLAGS:-%optflags -I%_fmoddir}" ; export FFLAGS ; 
+>   FCFLAGS="${FCFLAGS:-%optflags -I%_fmoddir}" ; export FCFLAGS ; 
+>   LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS; 
+>   [ "%_configure_gnuconfig_hack" = 1 ] && for i in $(find $(dirname %{_configure}) -name config.guess -o -name config.sub) ; do 
+>       [ -f /usr/lib/rpm/redhat/$(basename $i) ] && %{__rm} -f $i && %{__cp} -fv /usr/lib/rpm/redhat/$(basename $i) $i ; 
+>   done ; 
+>   [ "%_configure_libtool_hardening_hack" = 1 ] && [ x != "x%{_hardened_ldflags}" ] && 
+>       for i in $(find . -name ltmain.sh) ; do 
+>         %{__sed} -i.backup -e 's~compiler_flags=$~compiler_flags="%{_hardened_ldflags}"~' $i 
+>       done ; 
+>   %{_configure} --build=%{_build} --host=%{_host} \
+> 	--program-prefix=%{?_program_prefix} \
+> 	--disable-dependency-tracking \
+> 	--prefix=%{_prefix} \
+> 	--exec-prefix=%{_exec_prefix} \
+> 	--bindir=%{_bindir} \
+> 	--sbindir=%{_sbindir} \
+> 	--sysconfdir=%{_sysconfdir} \
+> 	--datadir=%{_datadir} \
+> 	--includedir=%{_includedir} \
+> 	--libdir=%{_libdir} \
+> 	--libexecdir=%{_libexecdir} \
+> 	--localstatedir=%{_localstatedir} \
+> 	--sharedstatedir=%{_sharedstatedir} \
+> 	--mandir=%{_mandir} \
+> 	--infodir=%{_infodir}
+> -14: cpan_dist_name	%(eval echo %{name} | %{__sed} -e 's/^perl-//')
+> -14: debug_package	
+> %ifnarch noarch
+> %global __debug_package 1
+> %package debuginfo
+> Summary: Debug information for package %{name}
+> Group: Development/Debug
+> AutoReqProv: 0
+> %description debuginfo
+> This package provides debug information for package %{name}.
+> Debug information is useful when developing applications that use this
+> package or when debugging this package.
+> %files debuginfo -f debugfiles.list
+> %defattr(-,root,root)
+> %endif
+> %{nil}
+> -14: defined	%{expand:%%{?%{1}:1}%%{!?%{1}:0}}
+> -14= dist	.fc25
+> -14: fc25	1
+> -14: fedora	25
+> -14: filter_from_provides	%{expand: 
+> %global __filter_from_prov %{?__filter_from_prov} | %{__sed} -e '%*' 
+> }
+> -14: filter_from_requires	%{expand: 
+> %global __filter_from_req %{?__filter_from_req} | %{__sed} -e '%*' 
+> }
+> -14: filter_provides_in(P)	%{expand: 
+> %global __filter_prov_cmd %{?__filter_prov_cmd} %{__grep} -v %{-P} '%*' | 
+> }
+> -14: filter_requires_in(P)	%{expand: 
+> %global __filter_req_cmd %{?__filter_req_cmd} %{__grep} -v %{-P} '%*' | 
+> }
+> -14: filter_setup	%{expand: 
+> %global _use_internal_dependency_generator 0 
+> %global __deploop() while read FILE; do echo "${FILE}" | /usr/lib/rpm/rpmdeps -%{1}; done | /bin/sort -u 
+> %global __find_provides /bin/sh -c "%{?__filter_prov_cmd} %{__deploop P} %{?__filter_from_prov}" 
+> %global __find_requires /bin/sh -c "%{?__filter_req_cmd}  %{__deploop R} %{?__filter_from_req}" 
+> }
+> -14: find_lang	%{_rpmconfigdir}/find-lang.sh %{buildroot}
+> -14: find_lang_kf5	
+>     (find %{buildroot}/%{_datadir}/locale/ -name "%1.qm" -type f | sed ' 
+>         s:%{buildroot}/:: 
+>         s:%{_datadir}/locale/\([a-zA-Z_\@]*\)/\([a-zA-Z_]*\)/%1.qm:%lang(\1) %{_datadir}/locale/\1/\2/%1.qm:' > %1.lang)
+> -14: firewalld_reload	
+> test -f %{_bindir}/firewall-cmd && firewall-cmd --reload --quiet || : 
+> %{nil}
+> -14: fix_shbang_line	
+> TMPHEAD=`mktemp`
+> TMPBODY=`mktemp`
+> for file in %* ; do 
+>     head -1 $file > $TMPHEAD
+>     tail -n +2 $file > $TMPBODY
+>     %{__perl} -pi -e '$f = /^#!/ ? "" : "#!%{__perl}$/"; $_="$f$_"' $TMPHEAD
+>     cat $TMPHEAD $TMPBODY > $file
+> done
+> %{__perl} -MExtUtils::MakeMaker -e "ExtUtils::MM_Unix->fixin(qw{%*})"
+> %{__rm} $TMPHEAD $TMPBODY
+> %{nil}
+> -14: fpc_arches	%{ix86} %{arm} x86_64
+> -14: gccgo_arches	%{mips}
+> -14: gconf_schema_obsolete	
+> for schema in %{*} ; do 
+>     %_do_gconf_schema_remove 
+> done 
+> %{nil}
+> -14: gconf_schema_prepare	
+> if [ "$1" -gt 1 ] ; then 
+>     rm -rf %{_localstatedir}/lib/rpm-state/gconf/* 
+>     for schema in %{*} ; do 
+>         if test -f %{_sysconfdir}/gconf/schemas/"$schema".schemas ; then 
+>             cp -p %{_sysconfdir}/gconf/schemas/"$schema".schemas %{_localstatedir}/lib/rpm-state/gconf/ || : 
+>         fi 
+>     done 
+> fi 
+> %{nil}
+> -14: gconf_schema_remove	
+> if [ "$1" -eq 0 ] ; then 
+>     for schema in %{*} ; do 
+>         %_do_gconf_schema_remove 
+>     done 
+> fi 
+> %{nil}
+> -14: gconf_schema_upgrade	
+> for schema in %{*} ; do 
+>     if test -f %{_localstatedir}/lib/rpm-state/gconf/"$schema".schemas ; then 
+>         cmp --quiet %{_sysconfdir}/gconf/schemas/"$schema".schemas %{_localstatedir}/lib/rpm-state/gconf/"$schema".schemas 
+>         if test $? != 0; then
+>             export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` 
+>             gconftool-2 --makefile-uninstall-rule %{_localstatedir}/lib/rpm-state/gconf/"$schema".schemas > /dev/null || : 
+>             gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/"$schema".schemas > /dev/null || : 
+>         fi 
+>         rm -f %{_localstatedir}/lib/rpm-state/gconf/"$schema".schemas 
+>     else 
+>         export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` 
+>         gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/"$schema".schemas > /dev/null || : 
+>     fi 
+> done 
+> %{nil}
+> -14: ghc_arches	%{ix86} x86_64 armv7hl ppc64 ppc64le aarch64 s390 s390x
+> -14: ghc_arches_with_ghci	%{ix86} x86_64 armv7hl ppc64 ppc64le aarch64 s390 s390x %{mips}
+> -14: global	__perl_requires /usr/lib/rpm/perl.req
+> -14: go_arches	%{golang_arches} %{gccgo_arches}
+> -14: go_compiler	1
+> -14: golang_arches	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
+> -14: gopath	%{_datadir}/gocode
+> -14: gradle_build	/usr/bin/python3 /usr/share/java-utils/mvn_build.py --gradle %{?xmvn_bootstrap: -b} %{?_without_javadoc: -j $(> .mfiles-javadoc)}%{?_without_tests: -f}
+>  -3: group	Applications/Productivity
+> -14: info_post	
+> if [ -f %{_infodir}/%1 ]; then # --excludedocs? 
+>   /usr/sbin/install-info %{_infodir}/%1 %{_infodir}/dir || : 
+> fi
+> -14: info_preun	
+> if [ $1 == 0 ]; then 
+>   if [ -f %{_infodir}/%1 ]; then # --excludedocs? 
+>     /usr/sbin/install-info --delete %{_infodir}/%1 %{_infodir}/dir || : 
+>   fi 
+> fi
+> -14: info_requires	
+> Requires(post): /usr/sbin/install-info 
+> Requires(preun): /usr/sbin/install-info
+> -14: install	%{?_enable_debug_packages:%{?buildsubdir:%{debug_package}}}
+> %%install
+> %{nil}
+> -14: ix86	i386 i486 i586 i686 pentium3 pentium4 athlon geode
+> -14: jar	%{java_home}/bin/jar
+> -14: java	%(. %{_javadir}-utils/java-functions; set_javacmd; echo $JAVACMD)
+> -14: java_home	%(. %{_javadir}-utils/java-functions; set_jvm; echo $JAVA_HOME)
+> -14: javac	%{java_home}/bin/javac
+> -14: javadoc	%{java_home}/bin/javadoc
+> -14: journal_catalog_update	
+> journalctl --update-catalog >/dev/null 2>&1 || : 
+> %{nil}
+> -14: jpackage_script	
+> install -d -m 755 %{buildroot}%{_bindir} 
+> cat > %{buildroot}%{_bindir}/%5 << EOF 
+> #!/bin/bash
+> #
+> # %{name} script
+> # JPackage Project <http://www.jpackage.org/>
+> 
+> # Source functions library
+> _prefer_jre="%{?6}"
+> . %{_javadir}-utils/java-functions
+> 
+> # Source system prefs
+> if [ -f %{_sysconfdir}/java/%{name}.conf ] ; then
+>   . %{_sysconfdir}/java/%{name}.conf
+> fi
+> 
+> # Source user prefs
+> if [ -f \$HOME/.%{name}rc ] ; then
+>   . \$HOME/.%{name}rc
+> fi
+> 
+> # Configuration
+> MAIN_CLASS=%1
+> BASE_FLAGS=%2
+> BASE_OPTIONS=%3
+> BASE_JARS="%(echo %4 | sed -e 's,:, ,g')"
+> 
+> # Set parameters
+> set_jvm
+> set_classpath \$BASE_JARS
+> set_flags \$BASE_FLAGS
+> set_options \$BASE_OPTIONS
+> 
+> # Let's start
+> run "\$@"
+> EOF
+> chmod 755 %{buildroot}%{_bindir}/%5
+> %{nil}
+> -14: kde_applications_version	16.08.2
+> -14: kde_runtime_requires	
+> Requires: kde-runtime >= %{kde_applications_version} 
+> %{nil}
+> -14: kdelibs4	kdelibs
+> -14: kdelibs4_epoch	6
+> -14: kdelibs4_evr	6:4.14.25-1.fc25
+> -14: kdelibs4_requires	
+> Requires: kdelibs4%{?_isa} >= %{kdelibs4_version} 
+> %{nil}
+> -14: kdelibs4_version	4.14.25
+>  -3: license	GPLv2
+> -14: make_build	%{__make} %{?_smp_mflags}
+> -14: make_install	%{__make} install DESTDIR=%{?buildroot}
+> -14: makeinstall	
+>   echo "warning: %%makeinstall is deprecated, try %%make_install instead" 1>&2
+>   %{__make} \
+> 	prefix=%{?buildroot:%{buildroot}}%{_prefix} \
+> 	exec_prefix=%{?buildroot:%{buildroot}}%{_exec_prefix} \
+> 	bindir=%{?buildroot:%{buildroot}}%{_bindir} \
+> 	sbindir=%{?buildroot:%{buildroot}}%{_sbindir} \
+> 	sysconfdir=%{?buildroot:%{buildroot}}%{_sysconfdir} \
+> 	datadir=%{?buildroot:%{buildroot}}%{_datadir} \
+> 	includedir=%{?buildroot:%{buildroot}}%{_includedir} \
+> 	libdir=%{?buildroot:%{buildroot}}%{_libdir} \
+> 	libexecdir=%{?buildroot:%{buildroot}}%{_libexecdir} \
+> 	localstatedir=%{?buildroot:%{buildroot}}%{_localstatedir} \
+> 	sharedstatedir=%{?buildroot:%{buildroot}}%{_sharedstatedir} \
+> 	mandir=%{?buildroot:%{buildroot}}%{_mandir} \
+> 	infodir=%{?buildroot:%{buildroot}}%{_infodir} \
+>   install
+> -14: mips	%{mips32} %{mips64}
+> -14: mips32	mips mipsel mipsr6 mipsr6el
+> -14: mips64	mips64 mips64el mips64r6 mips64r6el
+> -14: mipseb	mips mipsr6 mips64 mips64r6
+> -14: mipsel	mipsel mipsr6el mips64el mips64r6el
+> -14: mono_arches	%{ix86} x86_64 sparc sparcv9 ia64 %{arm} alpha s390x ppc ppc64 ppc64le
+> -14: mvn_alias	/usr/bin/python3 /usr/share/java-utils/mvn_alias.py
+> -14: mvn_artifact	/usr/bin/python3 /usr/share/java-utils/mvn_artifact.py
+> -14: mvn_build	/usr/bin/python3 /usr/share/java-utils/mvn_build.py %{?xmvn_bootstrap: -b} %{?_without_javadoc: -j $(> .mfiles-javadoc)}%{?_without_tests: -f}
+> -14: mvn_compat_version	/usr/bin/python3 /usr/share/java-utils/mvn_compat_version.py
+> -14: mvn_config	/usr/bin/python3 /usr/share/java-utils/mvn_config.py
+> -14: mvn_file	/usr/bin/python3 /usr/share/java-utils/mvn_file.py
+> -14: mvn_install(J:X)	
+> xmvn-install %{?-X} -R .xmvn-reactor -n %{?scl:%{pkg_name}}%{!?scl:%{name}} -d "%{buildroot}" 
+> %{-J*:jdir="%{-J*}"}%{!-J*:jdir=target/site/apidocs; [ -d .xmvn/apidocs ] && jdir=.xmvn/apidocs} 
+> if [ -d "${jdir}" ]; then 
+>    install -dm755 %{buildroot}%{_javadocdir}/%{?scl:%{pkg_name}}%{!?scl:%{name}} 
+>    cp -pr "${jdir}"/* %{buildroot}%{_javadocdir}/%{?scl:%{pkg_name}}%{!?scl:%{name}} 
+>    echo '%{_javadocdir}/%{?scl:%{pkg_name}}%{!?scl:%{name}}' >>.mfiles-javadoc 
+> fi 
+> %{nil}
+> -14: mvn_package	/usr/bin/python3 /usr/share/java-utils/mvn_package.py
+>  -3= name	deeptrim
+> -14: nil	%{!?nil}
+> -14: nodejs_arches	%{ix86} x86_64 %{arm} aarch64 %{power64}
+> -14: ocaml_natdynlink	aarch64 %{arm} %{ix86} ppc ppc64 ppc64le sparc sparcv9 x86_64
+> -14: ocaml_native_compiler	aarch64 %{arm} %{ix86} ppc ppc64 ppc64le sparc sparcv9 x86_64
+> -11: optflags	%{__global_cflags} -m64 -mtune=generic
+>  -3: packager	Bernd Stramm <bernd.stramm@gmail.com>
+> -14: patches	%{lua: for i, p in ipairs(patches) do print(p.." ") end}
+> -14: perl_archlib	%(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
+> -14: perl_default_filter	%{expand: 
+> %global __provides_exclude_from %{?__provides_exclude_from:%__provides_exclude_from|}^%{_docdir}
+> %global __requires_exclude_from %{?__requires_exclude_from:%__requires_exclude_from|}^%{_docdir}
+> %global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^perl\\(VMS|^perl\\(Win32|^perl\\(DB\\)|^perl\\(UNIVERSAL\\)
+> %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(VMS|^perl\\(Win32
+> }
+> -14: perl_default_filter_revision	3
+> -14: perl_default_subpackage_tests	%perl_subpackage_tests t/
+> -14: perl_ext_env_unset	%{expand:
+> unset PERL_MM_OPT MODULEBUILDRC PERL5INC
+> export PERL_AUTOINSTALL="--defaultdeps"
+> export PERL_MM_USE_DEFAULT=1
+> }
+> -14: perl_privlib	%(eval "`%{__perl} -V:installprivlib`"; echo $installprivlib)
+> -14: perl_sitearch	%(eval "`%{__perl} -V:installsitearch`"; echo $installsitearch)
+> -14: perl_sitelib	%(eval "`%{__perl} -V:installsitelib`"; echo $installsitelib)
+> -14: perl_subpackage_tests	%{expand: 
+> %global __perl_package 1
+> %global __perl_test_dirs %* 
+> %global __spec_check_pre %{expand:%{__perl_check_pre}} 
+> %package tests
+> Summary: Test suite for package %{name}
+> Group: Development/Debug
+> Requires: %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+> Requires: /usr/bin/prove 
+> %{?__tests_spkg_req:Requires: %__tests_spkg_req}
+> %{?__tests_spkg_prov:Provides: %__tests_spkg_prov}
+> AutoReqProv: 0 
+> %description tests
+> This package provides the test suite for package %{name}.
+> %files tests
+> %defattr(-,root,root,-)
+> %{perl_testdir}
+> }
+> -14: perl_testdir	%{_libexecdir}/perl5-tests
+> -14: perl_vendorarch	%(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
+> -14: perl_vendorlib	%(eval "`%{__perl} -V:installvendorlib`"; echo $installvendorlib)
+> -14: perl_version	%(eval "`%{__perl} -V:version`"; echo $version)
+> -14: pom_add_dep	%{expand: %{__pom_call}add_dep        %*
+> }
+> -14: pom_add_dep_mgmt	%{expand: %{__pom_call}add_dep_mgmt   %*
+> }
+> -14: pom_add_parent	%{expand: %{__pom_call}add_parent     %*
+> }
+> -14: pom_add_plugin	%{expand: %{__pom_call}add_plugin     %*
+> }
+> -14: pom_change_dep(rf)	%{expand: %{__pom_call}change_dep    %**
+> }
+> -14: pom_disable_module	%{expand: %{__pom_call}disable_module %*
+> }
+> -14: pom_remove_dep(rf)	%{expand: %{__pom_call}remove_dep %**
+> }
+> -14: pom_remove_parent	%{expand: %{__pom_call}remove_parent  %*
+> }
+> -14: pom_remove_plugin(rf)	%{expand: %{__pom_call}remove_plugin  %**
+> }
+> -14: pom_set_parent	%{expand: %{__pom_call}set_parent     %*
+> }
+> -14: pom_xpath_disable	%{expand: %{__pom_call}xpath_disable   %**
+> }
+> -14: pom_xpath_inject	%{expand: %{__pom_call}xpath_inject   %*
+> }
+> -14: pom_xpath_remove(rf)	%{expand: %{__pom_call}xpath_remove   %**
+> }
+> -14: pom_xpath_replace(rf)	%{expand: %{__pom_call}xpath_replace  %**
+> }
+> -14: pom_xpath_set(rf)	%{expand: %{__pom_call}xpath_set      %**
+> }
+> -14: postgresql_major	9.5
+> -14: power64	ppc64 ppc64p7 ppc64le
+> -14: py2_build	%{expand:
+> CFLAGS="%{optflags}" %{__python2} %{py_setup} %{?py_setup_args} build --executable="%{__python2} %{py2_shbang_opts}" %{?1};
+> sleep 1
+> }
+> -14: py2_install	%{expand:
+> CFLAGS="%{optflags}" %{__python2} %{py_setup} %{?py_setup_args} install -O1 --skip-build --root %{buildroot} %{?1}
+> }
+> -14: py2_shbang_opts	-s
+> -14: py_auto_byte_compile	1
+> -14: py_build	%{expand:
+> CFLAGS="%{optflags}" %{__python} %{py_setup} %{?py_setup_args} build --executable="%{__python2} %{py_shbang_opts}" %{?1}
+> }
+> -14: py_install	%{expand:
+> CFLAGS="%{optflags}" %{__python} %{py_setup} %{?py_setup_args} install -O1 --skip-build --root %{buildroot} %{?1}
+> }
+> -14: py_setup	setup.py
+> -14: py_shbang_opts	-s
+> -14: pyqt5	python-qt5
+> -14: pyqt5_epoch	0
+> -14: pyqt5_evr	5.7-1.fc25
+> -14: pyqt5_requires	
+> Requires: %{pyqt5} >= %{pyqt5_evr} 
+> %{nil}
+> -14: pyqt5_version	5.7
+> -14: python2_sitearch	%(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
+> -14: python2_sitelib	%(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+> -14: python2_version	%(%{__python2} -c "import sys; sys.stdout.write('{0.major}.{0.minor}'.format(sys.version_info))")
+> -14: python2_version_nodots	%(%{__python2} -c "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
+> -14: python3_pkgversion	3
+> -14: python_provide	%{lua:
+>         function string.starts(String,Start)
+>                 return string.sub(String,1,string.len(Start))==Start
+>         end
+>         package = rpm.expand("%{?1:%{1}}");
+>         vr = rpm.expand("%{?epoch:%{epoch}:}%{version}-%{release}")
+>         if (string.starts(package, "python2-")) then
+>                 if (rpm.expand("%{?buildarch}") ~= "noarch") then
+>                         str = "Provides: python-" .. string.sub(package,9,string.len(package)) .. "%{?_isa} = " .. vr;
+>                         print(rpm.expand(str));
+>                 end
+>                 print("\nProvides: python-");
+>                 print(string.sub(package,9,string.len(package)));
+>                 print(" = ");
+>                 print(vr);
+>                 --Obsoleting the previous default python package
+>                 print("\nObsoletes: python-");
+>                 print(string.sub(package,9,string.len(package)));
+>                 print(" < ");
+>                 print(vr);
+>         elseif (string.starts(package, "python" .. rpm.expand("%{python3_pkgversion}") .. "-")) then
+>                 --No unversioned provides as python3 is not default
+>         elseif (rpm.expand("%{?python3_other_pkgversion}") ~= "" and string.starts(package, "python" .. rpm.expand("%{python3_other_pkgversion}") .. "-")) then
+>                 --No unversioned provides as python3_other is not default
+>         elseif (string.starts(package, "pypy-")) then
+>                 --No unversioned provides as pypy is not default
+>         elseif (string.starts(package, "pypy3-")) then
+>                 --No unversioned provides as pypy is not default
+>         elseif (string.starts(package, "python-")) then
+>                 --Providing the current default python
+>                 print("Provides: python2-");
+>                 print(string.sub(package,8,string.len(package)));
+>                 print(" = ");
+>                 print(vr);
+>         else
+>                 print("%python_provide: ERROR: ");
+>                 print(package);
+>                 print(" not recognized.");
+>         end
+> }
+> -14: python_sitearch	%(%{__python} -c "from distutils.sysconfig import get_python_lib; import sys; sys.stdout.write(get_python_lib(1))")
+> -14: python_sitelib	%(%{__python} -c "from distutils.sysconfig import get_python_lib; import sys; sys.stdout.write(get_python_lib())")
+> -14: python_version	%(%{__python} -c "import sys; sys.stdout.write(sys.version[:3])")
+> -14: qmake_qt4	%{_qt4_qmake} %{_qt4_qmake_flags}
+> -14: qmake_qt5	%{_qt5_qmake} %{?_qt5_qmake_flags}
+> -14: qt5_qtwebengine_arches	%{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el
+>   0= relcount	9
+>  -3= release	9.fc25
+> -14: requires_eq	%(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
+> -14: rpmmacrodir	/usr/lib/rpm/macros.d
+> -14: selinux_modules_install("s:")	
+> . /etc/selinux/config 
+> _policytype=%{-s*} 
+> if [ -z "${_policytype}" ]; then 
+>   _policytype="targeted" 
+> fi 
+> %{_sbindir}/semodule -n -s ${_policytype} -X 200 -i %* 
+> if %{_sbindir}/selinuxenabled && [ "${SELINUXTYPE}" = "${_policytype}" ]; then 
+>   %{_sbindir}/load_policy 
+> fi 
+> %{nil}
+> -14: selinux_modules_uninstall("s:")	
+> . /etc/selinux/config 
+> _policytype=%{-s*} 
+> if [ -z "${_policytype}" ]; then 
+>   _policytype="targeted" 
+> fi 
+> if [ $1 -eq 0 ]; then 
+>   %{_sbindir}/semodule -n -X 200 -r %* &> /dev/null || : 
+>   if %{_sbindir}/selinuxenabled && [ "${SELINUXTYPE}" = "${_policytype}" ]; then 
+>     %{_sbindir}/load_policy 
+>   fi 
+> fi 
+> %{nil}
+> -14: selinux_relabel_post("s:")	
+> . /etc/selinux/config 
+> _policytype=%{-s*} 
+> if [ -z "${_policytype}" ]; then 
+>   _policytype="targeted" 
+> fi 
+> if /usr/sbin/selinuxenabled && [ "${SELINUXTYPE}" = "${_policytype}" ]; then 
+>    if [ -f %{_file_context_file_pre} ]; then 
+>      %{_sbindir}/fixfiles -C %{_file_context_file_pre} restore 
+>      rm -f %{_file_context_file_pre} 
+>    fi 
+> fi 
+> %{nil}
+> -14: selinux_relabel_pre("s:")	
+> . /etc/selinux/config 
+> _policytype=%{-s*} 
+> if [ -z "${_policytype}" ]; then 
+>   _policytype="targeted" 
+> fi 
+> if %{_sbindir}/selinuxenabled && [ "${SELINUXTYPE}" = "${_policytype}" ]; then 
+>   [ -f %{_file_context_file_pre} ] || cp -f %{_file_context_file} %{_file_context_file_pre} 
+> fi 
+> %{nil}
+> -14: sources	%{lua: for i, s in ipairs(sources) do print(s.." ") end}
+>   0= sourceversion	0.1.1
+> -14: sparc	sparc sparcv8 sparcv9 sparcv9v sparc64 sparc64v
+>  -3: summary	Text editor
+> -14: sysctl_apply	
+> /usr/lib/systemd/systemd-sysctl %{?*} >/dev/null 2>&1 || : 
+> %{nil}
+> -14: systemd_ordering	
+> OrderWithRequires(post): systemd 
+> OrderWithRequires(preun): systemd 
+> OrderWithRequires(postun): systemd 
+> %{nil}
+> -14: systemd_post	
+> if [ $1 -eq 1 ] ; then 
+>         # Initial installation 
+>         systemctl --no-reload preset %{?*} >/dev/null 2>&1 || : 
+> fi 
+> %{nil}
+> -14: systemd_postun	%{nil}
+> -14: systemd_postun_with_restart	
+> if [ $1 -ge 1 ] ; then 
+>         # Package upgrade, not uninstall 
+>         systemctl try-restart %{?*} >/dev/null 2>&1 || : 
+> fi 
+> %{nil}
+> -14: systemd_preun	
+> if [ $1 -eq 0 ] ; then 
+>         # Package removal, not upgrade 
+>         systemctl --no-reload disable --now %{?*} > /dev/null 2>&1 || : 
+> fi 
+> %{nil}
+> -14: systemd_requires	
+> Requires(post): systemd 
+> Requires(preun): systemd 
+> Requires(postun): systemd 
+> %{nil}
+> -14: systemd_user_post	%{expand:%systemd_post \--user \--global %%{?*}}
+> -14: systemd_user_postun	%{nil}
+> -14: systemd_user_postun_with_restart	%{nil}
+> -14: systemd_user_preun	
+> if [ $1 -eq 0 ] ; then 
+>         # Package removal, not upgrade 
+>         systemctl --no-reload --user --global disable %{?*} > /dev/null 2>&1 || : 
+> fi 
+> %{nil}
+> -14: sysusers_create	
+> systemd-sysusers %{?*} >/dev/null 2>&1 || : 
+> %{nil}
+> -14: sysusers_create_inline	
+> echo %{?*} | systemd-sysusers - >/dev/null 2>&1 || : 
+> %{nil}
+> -14: tests_req	%{expand:
+> BuildRequires: %*
+> %%tests_subpackage_requires %*
+> }
+> -14: tests_subpackage_provides	%{expand: 
+> %global __tests_spkg_prov %{?__tests_spkg_prov} %* 
+> }
+> -14: tests_subpackage_requires	%{expand: 
+> %global __tests_spkg_req %{?__tests_spkg_req} %* 
+> }
+> -14: texlive_post	
+> mkdir -p /var/run/texlive 
+> touch /var/run/texlive/run-texhash 
+> touch /var/run/texlive/run-mtxrun 
+> :
+> -14: texlive_posttrans	
+> if [ -e /var/run/texlive/run-texhash ] && [ -e %{_bindir}/texhash ]; then %{_bindir}/texhash 2> /dev/null; rm -f /var/run/texlive/run-texhash; fi 
+> if [ -e /var/run/texlive/run-mtxrun ]; then export TEXMF=/usr/share/texlive/texmf-dist; export TEXMFCNF=/usr/share/texlive/texmf-dist/web2c; export TEXMFCACHE=/var/lib/texmf; %{_bindir}/mtxrun --generate &> /dev/null; rm -f /var/run/texlive/run-mtxrun; fi 
+> :
+> -14: texlive_postun	
+> if [ $1 == 1 ]; then 
+>   mkdir -p /var/run/texlive 
+>   touch /var/run/run-texhash 
+> else 
+>   %{_bindir}/texhash 2> /dev/null 
+> fi 
+> :
+> -14: tmpfiles_create	
+> systemd-tmpfiles --create %{?*} >/dev/null 2>&1 || : 
+> %{nil}
+> -14: udev_hwdb_update	
+> udevadm hwdb --update >/dev/null 2>&1 || : 
+> %{nil}
+> -14: udev_rules_update	
+> udevadm control --reload >/dev/null 2>&1 || : 
+> %{nil}
+> -14: undefined	%{expand:%%{?%{1}:0}%%{!?%{1}:1}}
+>  -3: url	http://deeptrim.sourceforge.net/
+>  -3= version	0.1.1
+> -14: with	%{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+> -14: without	%{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+> ======================== active 670 empty 0
+> Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.0y37ae
+> + umask 022
+> + cd /home/bernd/rpmbuild/BUILD
+> + cd /home/bernd/rpmbuild/BUILD
+> + rm -rf deeptrim-0.1.1
+> + /usr/bin/gzip -dc /home/bernd/rpmbuild/SOURCES/deeptrim_0.1.1.tar.gz
+> + /usr/bin/tar -xvvof -
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/
+> -rw-rw-r-- root/root        11 2016-10-28 12:04 deeptrim-0.1.1/.gitignore
+> -rw-rw-r-- root/root       766 2016-10-28 12:04 deeptrim-0.1.1/COPYRIGHT
+> -rw-rw-r-- root/root     18093 2016-10-28 12:04 deeptrim-0.1.1/LICENSE.txt
+> -rw-rw-r-- root/root      1456 2016-10-28 12:04 deeptrim-0.1.1/Makefile.in
+> -rw-rw-r-- root/root       167 2016-10-28 12:04 deeptrim-0.1.1/README
+> -rwxrwxr-x root/root      4789 2016-10-28 12:04 deeptrim-0.1.1/configure
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/debian/
+> -rw-rw-r-- root/root       158 2016-10-28 12:04 deeptrim-0.1.1/debian/README
+> -rw-rw-r-- root/root       153 2016-10-28 12:04 deeptrim-0.1.1/debian/changelog
+> -rw-rw-r-- root/root         2 2016-10-28 12:04 deeptrim-0.1.1/debian/compat
+> -rw-rw-r-- root/root       422 2016-10-28 12:04 deeptrim-0.1.1/debian/control
+> -rw-rw-r-- root/root       169 2016-10-28 12:04 deeptrim-0.1.1/debian/copyright
+> -rw-rw-r-- root/root      1837 2016-10-28 12:04 deeptrim-0.1.1/debian/rules
+> -rw-rw-r-- root/root      1035 2016-10-28 12:04 deeptrim-0.1.1/deeptrim.changes
+> -rw-rw-r-- root/root       250 2016-10-28 12:04 deeptrim-0.1.1/deeptrim.desktop
+> -rw-rw-r-- root/root      2190 2016-10-28 12:04 deeptrim-0.1.1/deeptrim.png
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/help/
+> -rw-rw-r-- root/root     18093 2016-10-28 12:04 deeptrim-0.1.1/help/LICENSE.txt
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/images/
+> -rw-rw-r-- root/root      2190 2016-10-28 12:04 deeptrim-0.1.1/images/deeptrim.png
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/images/icons/
+> -rw-rw-r-- root/root      3017 2016-10-28 12:04 deeptrim-0.1.1/images/icons/application-exit.png
+> -rw-rw-r-- root/root      1554 2016-10-28 12:04 deeptrim-0.1.1/images/icons/arrow-left.png
+> -rw-rw-r-- root/root      1623 2016-10-28 12:04 deeptrim-0.1.1/images/icons/arrow-right.png
+> -rw-rw-r-- root/root      2575 2016-10-28 12:04 deeptrim-0.1.1/images/icons/configure.png
+> -rw-rw-r-- root/root      3809 2016-10-28 12:04 deeptrim-0.1.1/images/icons/dialog-cancel.png
+> -rw-rw-r-- root/root      1977 2016-10-28 12:04 deeptrim-0.1.1/images/icons/dialog-ok-apply.png
+> -rw-rw-r-- root/root      2613 2016-10-28 12:04 deeptrim-0.1.1/images/icons/document-close.png
+> -rw-rw-r-- root/root      2461 2016-10-28 12:04 deeptrim-0.1.1/images/icons/document-new.png
+> -rw-rw-r-- root/root      1616 2016-10-28 12:04 deeptrim-0.1.1/images/icons/document-open.png
+> -rw-rw-r-- root/root      3792 2016-10-28 12:04 deeptrim-0.1.1/images/icons/document-save-as.png
+> -rw-rw-r-- root/root      2122 2016-10-28 12:04 deeptrim-0.1.1/images/icons/document-save.png
+> -rw-rw-r-- root/root      1380 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-copy.png
+> -rw-rw-r-- root/root      1666 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-cut.png
+> -rw-rw-r-- root/root      2176 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-delete.png
+> -rw-rw-r-- root/root      3136 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-find.png
+> -rw-rw-r-- root/root      1578 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-paste.png
+> -rw-rw-r-- root/root      3383 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-redo.png
+> -rw-rw-r-- root/root      2197 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-select-all.png
+> -rw-rw-r-- root/root      1221 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-select.png
+> -rw-rw-r-- root/root      3440 2016-10-28 12:04 deeptrim-0.1.1/images/icons/edit-undo.png
+> -rw-rw-r-- root/root       379 2016-10-28 12:04 deeptrim-0.1.1/images/icons/folder-open.png
+> -rw-rw-r-- root/root      2705 2016-10-28 12:04 deeptrim-0.1.1/images/icons/fontforge.png
+> -rw-rw-r-- root/root      1896 2016-10-28 12:04 deeptrim-0.1.1/images/icons/fonts-package.png
+> -rw-rw-r-- root/root      2261 2016-10-28 12:04 deeptrim-0.1.1/images/icons/help-about.png
+> -rw-rw-r-- root/root      1772 2016-10-28 12:04 deeptrim-0.1.1/images/icons/insert-text.png
+> -rw-rw-r-- root/root      1964 2016-10-28 12:04 deeptrim-0.1.1/images/icons/media-seek-backward.png
+> -rw-rw-r-- root/root      1962 2016-10-28 12:04 deeptrim-0.1.1/images/icons/media-seek-forward.png
+> -rw-rw-r-- root/root      1210 2016-10-28 12:04 deeptrim-0.1.1/images/icons/paragraph.png
+> -rw-rw-r-- root/root      2528 2016-10-28 12:04 deeptrim-0.1.1/images/icons/preferences-desktop-font.png
+> -rw-rw-r-- root/root      2893 2016-10-28 12:04 deeptrim-0.1.1/images/icons/system-reboot.png
+> -rw-rw-r-- root/root      4280 2016-10-28 12:04 deeptrim-0.1.1/images/icons/system-search.png
+> -rw-rw-r-- root/root       883 2016-10-28 12:04 deeptrim-0.1.1/images/icons/view-fullscreen.png
+> -rw-rw-r-- root/root      2529 2016-10-28 12:04 deeptrim-0.1.1/images/icons/view-minimize.png
+> -rw-rw-r-- root/root      3743 2016-10-28 12:04 deeptrim-0.1.1/images/icons/view-refresh.png
+> -rw-rw-r-- root/root       899 2016-10-28 12:04 deeptrim-0.1.1/images/icons/view-restore.png
+> -rw-rw-r-- root/root      4037 2016-10-28 12:04 deeptrim-0.1.1/images/icons/weather-clouds.png
+> -rwxrwxr-x root/root       620 2016-10-28 12:04 deeptrim-0.1.1/pack.sh
+> -rw-rw-r-- root/root      3425 2016-10-28 12:04 deeptrim-0.1.1/permute.pro
+> -rw-rw-r-- root/root      2424 2016-10-28 12:04 deeptrim-0.1.1/permute.qrc
+> -rwxrwxr-x root/root       112 2016-10-28 12:04 deeptrim-0.1.1/pushall
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/
+> -rw-rw-r-- root/root       945 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/Makefile
+> -rw-rw-r-- root/root      1035 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/deeptrim.changes
+> -rw-rw-r-- root/root       250 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/deeptrim.desktop
+> -rw-rw-r-- root/root      2581 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/deeptrim.spec
+> -rw-rw-r-- root/root      1740 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/deeptrim_0.0.9.tar.gz
+> -rwxrwxr-x root/root        85 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/docount.sh
+> -rw-rw-r-- root/root         2 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/pack-count
+> -rw-rw-r-- root/root         9 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/pack-name
+> -rw-rw-r-- root/root         6 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/pack-version
+> -rw-rw-r-- root/root      1499 2016-10-28 12:04 deeptrim-0.1.1/rpm_packaging/spec.in
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/src/
+> -rw-rw-r-- root/root      2147 2016-10-28 12:04 deeptrim-0.1.1/src/all-lexers.h
+> -rw-rw-r-- root/root      6285 2016-10-28 12:04 deeptrim-0.1.1/src/cmdoptions.cpp
+> -rw-rw-r-- root/root      3438 2016-10-28 12:04 deeptrim-0.1.1/src/cmdoptions.h
+> -rw-rw-r-- root/root      4357 2016-10-28 12:04 deeptrim-0.1.1/src/config-edit.cpp
+> -rw-rw-r-- root/root      1558 2016-10-28 12:04 deeptrim-0.1.1/src/config-edit.h
+> -rw-rw-r-- root/root      1100 2016-10-28 12:04 deeptrim-0.1.1/src/dbus-defs.h
+> -rw-rw-r-- root/root      6040 2016-10-28 12:04 deeptrim-0.1.1/src/delib-debug.cpp
+> -rw-rw-r-- root/root      3372 2016-10-28 12:04 deeptrim-0.1.1/src/delib-debug.h
+> -rw-rw-r-- root/root      2829 2016-10-28 12:04 deeptrim-0.1.1/src/deliberate.cpp
+> -rw-rw-r-- root/root      1685 2016-10-28 12:04 deeptrim-0.1.1/src/deliberate.h
+> -rw-rw-r-- root/root      1734 2016-10-28 12:04 deeptrim-0.1.1/src/edit-key-filter.cpp
+> -rw-rw-r-- root/root      1326 2016-10-28 12:04 deeptrim-0.1.1/src/edit-key-filter.h
+> -rw-rw-r-- root/root      2083 2016-10-28 12:04 deeptrim-0.1.1/src/font-chooser.cpp
+> -rw-rw-r-- root/root      1391 2016-10-28 12:04 deeptrim-0.1.1/src/font-chooser.h
+> -rw-rw-r-- root/root       970 2016-10-28 12:04 deeptrim-0.1.1/src/gpl2.h
+> -rw-rw-r-- root/root      1836 2016-10-28 12:04 deeptrim-0.1.1/src/helpview.cpp
+> -rw-rw-r-- root/root       799 2016-10-28 12:04 deeptrim-0.1.1/src/helpview.h
+> -rw-rw-r-- root/root      1264 2016-10-28 12:04 deeptrim-0.1.1/src/ipc-server.cpp
+> -rw-rw-r-- root/root      1296 2016-10-28 12:04 deeptrim-0.1.1/src/ipc-server.h
+> -rw-rw-r-- root/root       322 2016-10-28 12:04 deeptrim-0.1.1/src/ipc-server.xml
+> -rw-rw-r-- root/root      1012 2016-10-28 12:04 deeptrim-0.1.1/src/ipc_adapt.cpp
+> -rw-rw-r-- root/root      1323 2016-10-28 12:04 deeptrim-0.1.1/src/ipc_adapt.h
+> -rw-rw-r-- root/root       853 2016-10-28 12:04 deeptrim-0.1.1/src/ipc_proxy.cpp
+> -rw-rw-r-- root/root      1571 2016-10-28 12:04 deeptrim-0.1.1/src/ipc_proxy.h
+> -rw-rw-r-- root/root      9620 2016-10-28 12:04 deeptrim-0.1.1/src/lexer-chooser.cpp
+> -rw-rw-r-- root/root      3649 2016-10-28 12:04 deeptrim-0.1.1/src/lexer-chooser.h
+> -rw-rw-r-- root/root      3201 2016-10-28 12:04 deeptrim-0.1.1/src/main.cpp
+> -rw-rw-r-- root/root      1052 2016-10-28 12:04 deeptrim-0.1.1/src/main.h
+> -rw-rw-r-- root/root     21600 2016-10-28 12:04 deeptrim-0.1.1/src/perm-editbox.cpp
+> -rw-rw-r-- root/root      4025 2016-10-28 12:04 deeptrim-0.1.1/src/perm-editbox.h
+> -rw-rw-r-- root/root      1290 2016-10-28 12:04 deeptrim-0.1.1/src/perm-scinti.cpp
+> -rw-rw-r-- root/root      1324 2016-10-28 12:04 deeptrim-0.1.1/src/perm-scinti.h
+> -rwxrwxr-x root/root     11474 2016-10-28 12:04 deeptrim-0.1.1/src/permute.cpp
+> -rw-rw-r-- root/root      3043 2016-10-28 12:04 deeptrim-0.1.1/src/permute.h
+> -rw-rw-r-- root/root      2262 2016-10-28 12:04 deeptrim-0.1.1/src/pick-string.cpp
+> -rw-rw-r-- root/root      1613 2016-10-28 12:04 deeptrim-0.1.1/src/pick-string.h
+> -rw-rw-r-- root/root      3712 2016-10-28 12:04 deeptrim-0.1.1/src/search-dialog.cpp
+> -rw-rw-r-- root/root      1736 2016-10-28 12:04 deeptrim-0.1.1/src/search-dialog.h
+> -rw-rw-r-- root/root      1665 2016-10-28 12:04 deeptrim-0.1.1/src/spin-event-filter.cpp
+> -rw-rw-r-- root/root      1348 2016-10-28 12:04 deeptrim-0.1.1/src/spin-event-filter.h
+> -rw-rw-r-- root/root      2842 2016-10-28 12:04 deeptrim-0.1.1/src/starter.cpp
+> -rw-rw-r-- root/root      2008 2016-10-28 12:04 deeptrim-0.1.1/src/starter.h
+> -rw-rw-r-- root/root      1993 2016-10-28 12:04 deeptrim-0.1.1/src/version.cpp
+> -rw-rw-r-- root/root      1404 2016-10-28 12:04 deeptrim-0.1.1/src/version.h
+> drwxrwxr-x root/root         0 2016-10-28 12:04 deeptrim-0.1.1/ui/
+> -rw-rw-r-- root/root      1611 2016-10-28 12:04 deeptrim-0.1.1/ui/DebugLog.ui
+> -rw-rw-r-- root/root      2871 2016-10-28 12:04 deeptrim-0.1.1/ui/config-edit.ui
+> -rw-rw-r-- root/root      6155 2016-10-28 12:04 deeptrim-0.1.1/ui/edit-box.ui
+> -rw-rw-r-- root/root      2549 2016-10-28 12:04 deeptrim-0.1.1/ui/helpwin.ui
+> -rw-rw-r-- root/root      5275 2016-10-28 12:04 deeptrim-0.1.1/ui/permute.ui
+> -rw-rw-r-- root/root      1567 2016-10-28 12:04 deeptrim-0.1.1/ui/pick-string.ui
+> -rw-rw-r-- root/root      4313 2016-10-28 12:04 deeptrim-0.1.1/ui/search.ui
+> + STATUS=0
+> + '[' 0 -ne 0 ']'
+> + cd deeptrim-0.1.1
+> + /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
+> + exit 0
+> Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.brJvey
+> + umask 022
+> + cd /home/bernd/rpmbuild/BUILD
+> + cd deeptrim-0.1.1
+> + sh configure
+> which: no qmake in (/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/bernd/.local/bin:/home/bernd/bin)
+> which: no lrelease in (/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/bernd/.local/bin:/home/bernd/bin)
+>       Tue, 01 Nov 2016 04:18:10 -0400
+>       configure
+>      
+>       qmake is.................. /usr/bin/qmake-qt4
+>       Installation prefix is.... /usr
+>       Distro setting is......... fedora
+>       Now you can build with.... make
+> + exit
+> Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.TCvokS
+> + umask 022
+> + cd /home/bernd/rpmbuild/BUILD
+> + '[' /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64 '!=' / ']'
+> + rm -rf /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64
+> ++ dirname /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64
+> + mkdir -p /home/bernd/rpmbuild/BUILDROOT
+> + mkdir /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64
+> + cd deeptrim-0.1.1
+> + rm -rf /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64
+> + install -p -d /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64/usr/bin
+> + install -p -m 755 bin/deeptrim /home/bernd/rpmbuild/BUILDROOT/deeptrim-0.1.1-9.fc25.x86_64/usr/bin
+> install: cannot stat 'bin/deeptrim': No such file or directory
+> error: Bad exit status from /var/tmp/rpm-tmp.TCvokS (%install)
+> 
+> 
+> RPM build errors:
+>     Bad exit status from /var/tmp/rpm-tmp.TCvokS (%install)

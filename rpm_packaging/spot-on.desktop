@@ -1,0 +1,12 @@
+
+[Desktop Entry]
+Name=Spot-on chat
+GenericName=Internet Chat
+Comment=Chat securely
+Exec=spot-on
+Icon=spot-on
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging;
+X-Desktop-File-Install-Version=0.16
