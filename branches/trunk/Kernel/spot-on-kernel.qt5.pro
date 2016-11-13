@@ -11,6 +11,11 @@ libspoton.commands = $(MAKE) -C ../../../libSpotOn library
 libspoton.depends = libntru libntru-devel
 purge.commands = rm -f *~
 
+
+D = $$(PWD)
+
+message ("you are here $$D")
+
 TEMPLATE	= app
 LANGUAGE	= C++
 QT		+= bluetooth concurrent network sql
