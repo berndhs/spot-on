@@ -10,7 +10,11 @@ purge.commands = rm -f *~
 TEMPLATE	= app
 LANGUAGE	= C++
 QT		+= network sql
+QT		+= concurrent
+QT 		+= widgets
+QT 		+= printsupport
 QT		-= gui
+QT		+= multimedia
 CONFIG		+= qt release warn_on
 
 # The function gcry_kdf_derive() is available in version

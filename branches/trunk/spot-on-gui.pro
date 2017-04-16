@@ -9,6 +9,10 @@ libspoton.depends =
 TEMPLATE	= app
 LANGUAGE	= C++
 QT		+= network sql
+QT 		+= widgets
+QT 		+= concurrent
+QT 		+= multimedia
+QT 		+= printsupport
 CONFIG		+= qt release warn_on
 
 # The function gcry_kdf_derive() is available in version
