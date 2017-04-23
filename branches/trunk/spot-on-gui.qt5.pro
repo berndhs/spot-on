@@ -1,13 +1,19 @@
 cache()
+DIR_BASE =  /home/bernd/dawork/spot-3/spot-on
+D = $$PWD
+message ("pwd says $$D")
+message ("TOP_DIR says $$TOP_DIR")
+
+
 include(spot-on-gui-source.pro)
 libntl.target = libntl.so
-libntl.commands = cd ../../libNTL/unix.d/src && ./configure && $(MAKE)
+libntl.commands = cd $$DIR_BASE ; cd libNTL/unix.d/src && ./configure && $(MAKE)
 libntl.depends =
 libntru.target = libntru.so
-libntru.commands = $(MAKE) -C ../../libNTRU
+libntru.commands = cd $$DIR_BASE ;  $(MAKE) -C libNTRU
 libntru.depends =
 libspoton.target = libspoton.so
-libspoton.commands = $(MAKE) -C ../../libSpotOn library
+libspoton.commands = cd $$DIR_BASE ; $(MAKE) -C libSpotOn library
 libspoton.depends =
 
 TEMPLATE	= app

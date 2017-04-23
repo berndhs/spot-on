@@ -1,6 +1,8 @@
 cache()
 doxygen.commands = doxygen spot-on.doxygen
 purge.commands = rm -f */*~ *~
+TOP_DIR = $$PWD
+message ("TOP_DIR is $$TOP_DIR")
 
 CONFIG		+=	ordered
 QMAKE_EXTRA_TARGETS = doxygen purge
